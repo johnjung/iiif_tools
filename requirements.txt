@@ -1,0 +1,2 @@
+https://github.com/johnjung/marc_tools/tarball/master#egg=marc_tools
+https://github.com/uchicago-library/pyiiif/tarball/master#egg=pyiiif
