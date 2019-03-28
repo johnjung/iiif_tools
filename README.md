@@ -1,6 +1,7 @@
-# map_tools
+# iiif_tools
 
-Scripts to build IIIF Manifests for the University of Chicago maps collection. 
+Scripts to build IIIF Manifests for digital collections at the University of
+Chicago.
 
 ## Contributing
 
