@@ -9,19 +9,19 @@ from pyiiif.pres_api.twodotone.records import Annotation, Canvas, ImageResource,
 from marc_tools.converters import MarcToDc
 
 
-class MapIIIFManifest:
-  def __init__(self, dc_str):
-    self.dc = MarcToDc(dc_str)
+class MapsIIIFManifest:
+  def __init__(self, marc_str):
+    self.dc = MarcToDc(marc_str)
 
-  def identifier(self, dc):
-    c = re.sub('^.*\/', '', dc.identifier)
+  def identifier(self):
+    c = re.sub('^.*\/', '', self.dc.identifier)
     return 'https://iiif-manifest.lib.uchicago.edu/maps/{}/{}.json'.format(c, c)
 
   def __str__(self):
-    manifest = Manifest(identifier(dc))
+    manifest = Manifest(self.identifier())
     manifest.type = "sc:Manifest"
-    manifest.label = dc.title
-    manifest.description = dc.description
+    manifest.label = self.dc.title
+    manifest.description = self.dc.description
     return str(manifest)
 
     '''
