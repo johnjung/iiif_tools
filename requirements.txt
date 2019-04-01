@@ -1,3 +1,4 @@
 docopt
+uuid
 https://github.com/johnjung/metadata_tools/tarball/master#egg=metadata_tools
 https://github.com/uchicago-library/pyiiif/tarball/master#egg=pyiiif

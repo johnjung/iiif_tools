@@ -2,11 +2,13 @@ import json
 import re
 import requests
 import sys
+import urllib.parse
+import uuid
 import xml.etree.ElementTree as ElementTree
 
 from io import BytesIO
 from pyiiif.pres_api.twodotone.records import Annotation, Canvas, ImageResource, Manifest, MetadataField, Sequence
-from marc_tools.converters import MarcToDc
+from metadata_tools.converters import MarcToDc
 
 
 class MapsIIIFManifest:
@@ -14,48 +16,53 @@ class MapsIIIFManifest:
     self.dc = MarcToDc(marc_str)
 
   def identifier(self):
-    c = re.sub('^.*\/', '', self.dc.identifier)
+    c = re.sub('^.*\/', '', self.dc.identifier[0])
     return 'https://iiif-manifest.lib.uchicago.edu/maps/{}/{}.json'.format(c, c)
+
+  def get_image_resource_url(self, path):
+    """Return the URL for something served up via the imageserver. 
+ 
+    :param path - a string, path to this thing under IIIF_Files. e.g., /maps/...
+    must start with a slash. 
+    """
+    return 'https://iiif-server.lib.uchicago.edu/{}/full/full/0/default.jpg'.format(urllib.parse.quote(path, safe=''))
 
   def __str__(self):
     manifest = Manifest(self.identifier())
     manifest.type = "sc:Manifest"
-    manifest.label = self.dc.title
-    manifest.description = self.dc.description
-    return str(manifest)
+    manifest.label = self.dc.title[0]
+    manifest.description = self.dc.description[0]
 
-    '''
-      metadata_list = []
-      for label in ('Identifier', 'Title', 'Creator', 'Date', 'Description',
-  		  'Rights', 'Language', 'Format', 'Type', 'Subject', 
-                    'Print Call Number', 'Coverage', 'Relation'):
-        e = getattr(marc_tool, 'get_{}'.format(label.replace(' ', '_').lower()))
-        metadata_list.extend([MetadataField(label, v) for v in e()])
-      manifest.set_metadata(metadata_list)
-    '''
-  
-  
-    ''' 
-    sequence = Sequence("http://example.org/sequence/1")
-  
-    # and now to make a simple canvas
-    canvas = Canvas("http://example.org/canvas/1")
-    canvas.label = "A Canvas"
-  
-    # now to make an annotation for that canvas
-    annotate = Annotation("http://example.org/annotation/1")
-  
-    # now to make an image resource to put in the canvas
-    img = ImageResource("http://example.org/an_image.jpg")
-  
-    #  last but not least you have to put all the pieces together...
-    annotate.resource = img
-    canvas.images = [annotate]
+    metadata = []
+    metadata.append(MetadataField('Identifier', self.identifier()))
+    for l in ('Coverage', 'Creator', 'Description', 'Extent', 'Format',
+              'Medium', 'Relation', 'Subject', 'Title', 'Type'):
+      metadata.extend([MetadataField(l, v) for v in getattr(self.dc, l.lower())])
+    manifest.set_metadata(metadata)
+
+    sequence_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
+    sequence = Sequence(sequence_id)
+
+    canvas_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
+    # should be the http(s) URI where JSON representation is published. 
+    canvas = Canvas(canvas_id)
+    # does this need a label? 
+
+    annotation_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
+    annotation = Annotation(annotation_id, canvas_id)
+
+    #img_url = self.get_image_resource_url('/maps/G4104-C6E625-1926-T5/tifs/G4104-C6E625-1926-T5.TIF')
+    img = ImageResource(
+      'https',
+      'iiif-server.lib.uchicago.edu',
+      '',
+      urllib.parse.quote('/maps/G4104-C6-2B7-1923-U5/tifs/G4104-C6-2B7-1923-U5.tif', safe=''),
+      'image/tiff'
+    )
+
+    annotation.resource = img
+    canvas.images = [annotation]
     sequence.canvases = [canvas]
     manifest.sequences = [sequence]
-  
-    # and voila! you have a IIIF manifest record!
-    print(json.dumps(manifest.to_dict()))
-  
-    break
-    '''
+
+    return str(manifest)
