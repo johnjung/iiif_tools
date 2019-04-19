@@ -1,7 +1,6 @@
-# iiif_tools
+# IIIF Tools
 
-Scripts to build IIIF Manifests for digital collections at the University of
-Chicago.
+Scripts to build IIIF Collections and Manifests for digital collections projects. 
 
 ## Useful Scripts
 
