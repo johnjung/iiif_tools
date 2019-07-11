@@ -8,8 +8,7 @@ import xml.etree.ElementTree as ElementTree
 
 from io import BytesIO
 from pyiiif.pres_api.twodotone.records import Annotation, Canvas, ImageResource, Manifest, MetadataField, Sequence
-from metadata_tools.converters import MarcToDc
-
+from metadata_converters.classes import MarcToDc
 
 class MapsIIIFManifest:
   def __init__(self, marc_str):
@@ -50,16 +49,14 @@ class MapsIIIFManifest:
 
     annotation_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
     annotation = Annotation(annotation_id, canvas_id)
-
     #img_url = self.get_image_resource_url('/maps/G4104-C6E625-1926-T5/tifs/G4104-C6E625-1926-T5.TIF')
     img = ImageResource(
       'https',
       'iiif-server.lib.uchicago.edu',
       '',
-      urllib.parse.quote('/maps/G4104-C6-2B7-1923-U5/tifs/G4104-C6-2B7-1923-U5.tif', safe=''),
+      urllib.parse.quote('maps/G4104-C6-2B7-1923-U5/tifs/G4104-C6-2B7-1923-U5.tif', safe=''),
       'image/tiff'
     )
-
     annotation.resource = img
     canvas.images = [annotation]
     sequence.canvases = [canvas]
