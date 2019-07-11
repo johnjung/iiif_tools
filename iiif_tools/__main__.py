@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 """Usage:
+    iiif_tools -
     iiif_tools -f <path>
 
 Options:
   -h --help     Show this screen.
   -f --file     File path to make manifest from
+  -             Take input from the terminal
 """
 
 
@@ -14,9 +16,13 @@ from maps_manifest import MapsIIIFManifest
 
 if __name__=="__main__":
   options = docopt(__doc__)
-  if "<path>" in options:
-  	with open(options['<path>'], 'r') as dcxml:
-	  	sys.stdout.write(str(MapsIIIFManifest(dcxml.read())))
-  else:
+
+  if options['--file']:
+  	with open(options['<path>'], 'r') as file:
+  		dcxml = file.read()
+  elif options['-']:
   	dcxml = sys.stdin.read()
-  	sys.stdout.write(str(MapsIIIFManifest(dcxml)))
+  else:
+  	sys.exit()
+  sys.stdout.write(str(MapsIIIFManifest(dcxml)))
+  sys.exit()
