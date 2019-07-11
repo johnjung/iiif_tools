@@ -1,0 +1,38 @@
+<export><workspace name="ML Import Scripts"><query name="Rename files to URI id" focus="true" listorder="1" taborder="1" active="true" database="15539356156219124995" server="11421835591644009240" database-name="Documents" server-name="App-Services" mode="xquery">xquery version "1.0-ml";
+
+for $x in fn:collection()
+  let $filename := base-uri($x)
+  let $file := fn:doc($filename)
+  let $at := "&amp;#64;"
+  let $id := $file/*[name()=concat($at, "id")]
+  return
+    if ((substring($id,1,7) eq 'http://') or (substring($id,1,8) eq 'https://'))
+    then (
+      let $old-uri := $filename (: original URI :)
+      let $new-uri := $id (: desired URI :)
+      let $lock := ($old-uri, $new-uri) ! xdmp:lock-for-update(.)
+      let $prop-ns := fn:namespace-uri-from-QName(xs:QName("prop:properties"))
+      let $properties :=
+        xdmp:document-properties($old-uri)/node()/node()
+          [ fn:namespace-uri(.) ne $prop-ns ]
+      return 
+        if ((fn:doc-available($old-uri)) and (fn:not($old-uri eq $new-uri)))
+        then (
+          xdmp:document-insert(
+            $new-uri,
+            fn:doc($old-uri),
+            xdmp:document-get-permissions($old-uri),
+            xdmp:document-get-collections($old-uri)
+          ),
+          xdmp:document-delete($old-uri),
+          xdmp:document-set-properties($new-uri, $properties)
+        )
+        else (
+          "Could not rename file because it is unavailable or @id is already the URI",
+          $old-uri
+        )
+      )
+    else (
+      "File is not a json file or it is not validated (@id is not a url)",
+      $filename
+    )</query></workspace></export>
