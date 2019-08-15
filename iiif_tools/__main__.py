@@ -11,6 +11,7 @@ Options:
 
 
 import sys
+import json
 from docopt import docopt
 from maps_manifest import MapsIIIFManifest
 
@@ -24,5 +25,9 @@ if __name__=="__main__":
   	dcxml = sys.stdin.read()
   else:
   	sys.exit()
-  sys.stdout.write(str(MapsIIIFManifest(dcxml)))
+  manifest = MapsIIIFManifest(dcxml)
+  # Converting manifest into a json dictionary from the manifest string
+  manifest = json.loads(str(manifest))
+  # Printing out the beautified json string
+  sys.stdout.write(json.dumps(manifest, sort_keys=True, indent=4))
   sys.exit()
