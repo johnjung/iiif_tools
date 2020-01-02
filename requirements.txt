@@ -1,5 +1,9 @@
 docopt
+jinja2
+paramiko
+Pillow
+python-magic
 rdflib
 uuid
-https://github.com/johnjung/metadata_converters/tarball/master#egg=metadata_converters
-https://github.com/uchicago-library/pyiiif/tarball/master#egg=pyiiif
+git+https://github.com/johnjung/metadata_converters
+git+https://github.com/uchicago-library/pyiiif

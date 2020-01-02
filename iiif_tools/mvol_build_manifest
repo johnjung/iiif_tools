@@ -1,7 +1,7 @@
-#!python3
+#!/usr/bin/env python
 
 """Usage:
-   mvol_manifest.py <identifier>
+   mvol_build_manifest <identifier>
 """
 
 # todo
@@ -19,8 +19,8 @@ import xml.etree.ElementTree as ElementTree
 
 from mvol_identifier import MvolIdentifier
 
-class IIIFManifest:
-  """Make a manifest for a Campus Publications (mvol) issue.
+class MvolIIIFManifest:
+  """Make a manifest for an mvol (Campus Publications, etc.)
      e.g. https://iiif-manifest.lib.uchicago.edu/mvol/0004/1929/0103/mvol-0004-1929-0103.json
 
   """

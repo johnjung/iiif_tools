@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+import getpass
 import json
+import os
 import re
 import requests
 import sys
@@ -8,12 +10,13 @@ import uuid
 import xml.etree.ElementTree as ElementTree
 
 from io import BytesIO
+from metadata_converters.classes import SocSciMapsMarcXmlToDc
+from PIL import Image
 from pyiiif.pres_api.twodotone.records import Annotation, Canvas, ImageResource, Manifest, MetadataField, Sequence
-from metadata_converters.classes import MarcToDc
 
-class MapsIIIFManifest:
+class SocSciMapsIIIFManifest:
     def __init__(self, marc_str):
-        self.dc = MarcToDc(marc_str)
+        self.dc = SocSciMapsMarcXmlToDc(marc_str)
 
     def identifier(self):
         c = re.sub('^.*\/', '', self.dc.identifier[0])
@@ -46,18 +49,31 @@ class MapsIIIFManifest:
         canvas_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
         # should be the http(s) URI where JSON representation is published. 
         canvas = Canvas(canvas_id)
-        # does this need a label? 
 
         annotation_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
         annotation = Annotation(annotation_id, canvas_id)
-        #img_url = self.get_image_resource_url('/maps/G4104-C6E625-1926-T5/tifs/G4104-C6E625-1926-T5.TIF')
+
+        identifier = self.dc.identifier[0].replace('http://pi.lib.uchicago.edu/1001/', '')
+
+        img_path = '{}/tifs/{}.tif'.format(
+            identifier,
+            identifier.split('/').pop()
+        )
+
         img = ImageResource(
             'https',
             'iiif-server.lib.uchicago.edu',
             '',
-            urllib.parse.quote('maps/G4104-C6-2B7-1923-U5/tifs/G4104-C6-2B7-1923-U5.tif', safe=''),
+            img_path,
             'image/tiff'
         )
+
+        i = Image.open(BytesIO(
+            requests.get(self.get_image_resource_url(img_path)).content
+        ))
+
+        img.set_height(i.size[0])
+        img.set_width(i.size[1])
     
         annotation.resource = img
         canvas.images = [annotation]
