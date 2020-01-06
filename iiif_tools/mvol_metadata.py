@@ -2,86 +2,85 @@ import csv
 import re
 import xml.etree.ElementTree as ElementTree
 
+
 class MvolMetadata:
-  """helper functions to make collection and manifest files for iiif. 
-
-  Args:
-    directory (str): e.g. /Volumes/webdav/...
-
-  """
-
-  def __init__(self, directory):
-    self.directory = directory
-    self.struct = None
-    self.mets = None
-
-  def get_page(self, n):
-    """Get a page number from structural metadata.
+    """helper functions to make collection and manifest files for iiif. 
 
     Args:
-      n(int): object number
+      directory (str): e.g. /Volumes/webdav/...
 
-    Returns:
-      str: page number for this object.
-  
     """
 
-    if not self.struct:
-      for entry in os.listdir(self.directory):
-        if entry.endswith('struct.txt'):
-          self.struct = []
-          with open(self.directory + '/' + entry, 'r') as f:
-            next(f)
-            reader = csv.reader(f, delimiter='\t')
-            for object, page, milestone in reader:
-              self.struct.append([object, page, milestone])
-      assert self.struct != None
- 
-    return self.struct[n][1]
+    def __init__(self, directory):
+        self.directory = directory
+        self.struct = None
+        self.mets = None
 
-  def get_width(self, n):
-    """Get image width. 
+    def get_page(self, n):
+        """Get a page number from structural metadata.
 
-    Args:
-      n(int): object number
+        Args:
+          n(int): object number
 
-    Returns:
-      int: image width
-  
-    """
+        Returns:
+          str: page number for this object.
 
-    if not self.mets:
-      self._load_mets()
-      assert self.mets != None
+        """
 
-    # get width here. 
-    /mets/amdSec/techMD/mdWrap/xmlData
+        if not self.struct:
+            for entry in os.listdir(self.directory):
+                if entry.endswith('struct.txt'):
+                    self.struct = []
+                    with open(self.directory + '/' + entry, 'r') as f:
+                        next(f)
+                        reader = csv.reader(f, delimiter='\t')
+                        for object, page, milestone in reader:
+                            self.struct.append([object, page, milestone])
+            assert self.struct != None
 
-    /mix:mix
-      /mix:BasicImageInformation
-        /mix:BasicImageCharacteristics
-          /mix:imageWidth
-    
-  def get_height(self, n):
-    """Get image height. 
+        return self.struct[n][1]
 
-    Args:
-      n(int): object number
+    def get_width(self, n):
+        """Get image width. 
 
-    Returns:
-      int: image height
-  
-    """
+        Args:
+          n(int): object number
 
-    if not self.mets:
-      self._load_mets()
-      assert self.mets != None
+        Returns:
+          int: image width
 
-    # get height here. 
+        """
 
-    def _load_mets(self):
-      for entry in os.listdir(self.directory):
-        if entry.endswith('mets.xml'):
-          self.mets = ElementTree.parse(self.directory + '/' + entry)
+        if not self.mets:
+            self._load_mets()
+            assert self.mets != None
 
+        # get width here.
+        # /mets/amdSec/techMD/mdWrap/xmlData
 
+        # /mix:mix
+        #   /mix:BasicImageInformation
+        #     /mix:BasicImageCharacteristics
+        #       /mix:imageWidth
+
+    def get_height(self, n):
+        """Get image height. 
+
+        Args:
+          n(int): object number
+
+        Returns:
+          int: image height
+
+        """
+
+        if not self.mets:
+            self._load_mets()
+            assert self.mets != None
+
+        # get height here.
+
+        def _load_mets(self):
+            for entry in os.listdir(self.directory):
+                if entry.endswith('mets.xml'):
+                    self.mets = ElementTree.parse(self.directory + '/' + entry)
