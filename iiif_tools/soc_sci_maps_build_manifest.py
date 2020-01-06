@@ -9,13 +9,10 @@ Social Scientists Maps Collection.
 
 import csv, json, os, re, sys
 import xml.etree.ElementTree as ElementTree
-from classes import SocSciMapsIIIFManifest
+from .classes import SocSciMapsIIIFManifest
 from docopt import docopt
 
-
-if __name__ == '__main__':
-    arguments = docopt(__doc__)
-
+def main():
     sys.stdout.write(
         str(
             SocSciMapsIIIFManifest(
@@ -23,3 +20,6 @@ if __name__ == '__main__':
             )
         )
     )
+
+if __name__ == '__main__':
+    main()
