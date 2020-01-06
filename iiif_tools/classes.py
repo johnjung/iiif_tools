@@ -20,7 +20,7 @@ class SocSciMapsIIIFManifest:
 
     def identifier(self):
         c = re.sub('^.*\/', '', self.dc.identifier[0])
-        return 'https://iiif-manifest.lib.uchicago.edu/maps/{}/{}.json'.format(c, c)
+        return 'https://iiif-manifest.lib.uchicago.edu/maps/chisoc/{}/{}.json'.format(c, c)
 
     def get_image_resource_url(self, path):
         """Return the URL for something served up via the imageserver. 
