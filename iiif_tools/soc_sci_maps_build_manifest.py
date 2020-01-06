@@ -13,13 +13,17 @@ from .classes import SocSciMapsIIIFManifest
 from docopt import docopt
 
 def main():
-    sys.stdout.write(
-        str(
-            SocSciMapsIIIFManifest(
-                '<collection>{}</collection>'.format(sys.stdin.read())
+    root = ElementTree.fromstring(sys.stdin.read())
+    if root.tag == '{http://www.loc.gov/MARC21/slim}collection':
+        sys.stdout.write(
+            str(
+                SocSciMapsIIIFManifest(
+                    ElementTree.tostring(root, encoding='utf-8')
+                )
             )
         )
-    )
+    else:
+        raise NotImplementedError
 
 if __name__ == '__main__':
     main()
