@@ -64,7 +64,7 @@ class SocSciMapsIIIFManifest:
             'https',
             'iiif-server.lib.uchicago.edu',
             '',
-            img_path,
+            urllib.parse.quote(img_path, safe=''),
             'image/tiff'
         )
 
