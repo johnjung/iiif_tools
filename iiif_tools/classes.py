@@ -11,8 +11,10 @@ import xml.etree.ElementTree as ElementTree
 
 from io import BytesIO
 from metadata_converters.classes import SocSciMapsMarcXmlToDc
-from PIL import Image
 from pyiiif.pres_api.twodotone.records import Annotation, Canvas, ImageResource, Manifest, MetadataField, Sequence
+
+from PIL import Image
+Image.MAX_IMAGE_PIXELS = 1000000000
 
 class SocSciMapsIIIFManifest:
     def __init__(self, marc_str):
