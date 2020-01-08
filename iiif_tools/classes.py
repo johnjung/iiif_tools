@@ -49,6 +49,7 @@ class SocSciMapsIIIFManifest:
         canvas_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
         # should be the http(s) URI where JSON representation is published. 
         canvas = Canvas(canvas_id)
+        canvas.label = '[1]'
 
         annotation_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
         annotation = Annotation(annotation_id, canvas_id)
