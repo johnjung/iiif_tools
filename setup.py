@@ -10,6 +10,7 @@ setuptools.setup(
     entry_points={
         'console_scripts': [
             'cli_collection_browse = iiif_tools.cli_collection_browse:main',
+            'soc_sci_maps_build_collection = iiif_tools.soc_sci_maps_build_collection:main',
             'soc_sci_maps_build_manifest = iiif_tools.soc_sci_maps_build_manifest:main',
         ]
     },

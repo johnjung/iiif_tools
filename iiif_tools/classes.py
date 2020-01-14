@@ -47,14 +47,6 @@ class SocSciMapsIIIFManifest:
     
         sequence_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
         sequence = Sequence(sequence_id)
-    
-        canvas_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
-        # should be the http(s) URI where JSON representation is published. 
-        canvas = Canvas(canvas_id)
-        canvas.label = '[1]'
-
-        annotation_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
-        annotation = Annotation(annotation_id, canvas_id)
 
         identifier = self.dc.identifier[0].replace('http://pi.lib.uchicago.edu/1001/', '')
 
@@ -74,6 +66,16 @@ class SocSciMapsIIIFManifest:
         i = Image.open(BytesIO(
             requests.get(self.get_image_resource_url(img_path)).content
         ))
+    
+        canvas_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
+        # should be the http(s) URI where JSON representation is published. 
+        canvas = Canvas(canvas_id)
+        canvas.label = '[1]'
+        canvas.set_height(i.size[0])
+        canvas.set_width(i.size[1])
+
+        annotation_id = 'https://www.lib.uchicago.edu/{}'.format(str(uuid.uuid4()))
+        annotation = Annotation(annotation_id, canvas_id)
 
         img.set_height(i.size[0])
         img.set_width(i.size[1])
