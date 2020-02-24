@@ -11,23 +11,21 @@ import json, os, sys
 from docopt import docopt
 from metadata_converters import SocSciMapsMarcXmlToDc
 
-def list_by_publication_date():
-    collection = {
+def collection_skeleton(at_id, description, viewinghint):
+    return {
         '@context': 'http://iiif.io/api/presentation/context.json',
-        '@id': 'http://iiif-collection.lib.uchicago.edu/maps/chisoc/chisoc.json',
+        '@id': at_id,
         '@type': 'sc:Collection',
         'label': 'Maps Digital Collections',
-        'description': 'The list of Maps collections from the University of Chicago Library',
-        'viewingHint': 'individuals',
+        'description': description,
+        'viewingHint': viewinghint,
         'members': []
     }
 
-    dc_list = []
-    d = '/data/digital_collections/IIIF/IIIF_Files/maps/chisoc'
-
+def socsci_identifiers():
     # because dates appear in multiple formats which don't lend
     # themselves to sorting, this list has been manually sorted
-    for i in (
+    return (
         'G4104-C6-2N3E51-1908-S2',
         'G4104-C6-2L9-1920z-U5',
         'G4104-C6-2N15-1920z-U5',
@@ -73,7 +71,18 @@ def list_by_publication_date():
         'G4104-C6P3-1943-M2',
         'G4104-C6P3-1943-M21',
         'G4104-C6-2H9E11-1956-T3',
-    ):
+    )
+    
+
+def list_by_publication_date():
+    d = '/data/digital_collections/IIIF/IIIF_Files/maps/chisoc'
+    collection = collection_skeleton(
+        'http://iiif-collection.lib.uchicago.edu/maps/chisoc/chisoc.json',
+        'Social Scientists Maps collection from the University of Chicago Library',
+        'individuals'
+    )
+
+    for i in socsci_identifiers():
         x = open('{0}/{1}/{1}.xml'.format(d, i))
         dc = SocSciMapsMarcXmlToDc(x.read())
         collection['members'].append({
@@ -84,11 +93,93 @@ def list_by_publication_date():
         })
     return json.dumps(collection) + '\n'
 
+def list_subjects():
+    d = '/data/digital_collections/IIIF/IIIF_Files/maps/chisoc'
+    collection = collection_skeleton(
+        'http://iiif-collection.lib.uchicago.edu/maps/chisoc/chisoc-subjects.json',
+        'Social Scientists Maps collection subjects',
+        'multi-part'
+    )
+    subjects = set()
+    for i in socsci_identifiers():
+        x = open('{0}/{1}/{1}.xml'.format(d, i))
+        dc = SocSciMapsMarcXmlToDc(x.read())
+        for s in dc.subject:
+            subjects.add(s)
+
+    for s in sorted(list(subjects)):
+        collection['members'].append({
+            '@type': 'sc:Collection',
+            '@id':
+            'https://iiif-manifest.lib.uchicago.edu/maps/chisoc/chisoc-subjects-{}.json'.format(s.lower().replace(' ', '-')),
+            'viewingHint': 'multi-part',
+            'label': s
+        })
+    return json.dumps(collection) + '\n'
+
+def subject(s):
+    d = '/data/digital_collections/IIIF/IIIF_Files/maps/chisoc'
+    collection = collection_skeleton(
+        'http://iiif-collection.lib.uchicago.edu/maps/chisoc/chisoc-subjects-{}.json'.format(s.lower().replace(' ', '-')),
+        'Social Scientists Maps collection maps with the subject: {}'.format(s),
+        'individuals'
+    )
+
+    for i in socsci_identifiers():
+        x = open('{0}/{1}/{1}.xml'.format(d, i))
+        dc = SocSciMapsMarcXmlToDc(x.read())
+        if s in dc.subject:
+            collection['members'].append({
+                '@type': 'sc:Manifest',
+                '@id': 'https://iiif-manifest.lib.uchicago.edu/maps/chisoc/{0}/{0}.json'.format(i),
+                'viewingHint': 'multi-part',
+                'label': dc.title[0]
+            })
+    return json.dumps(collection) + '\n'
+
 def main():
     options = docopt(__doc__)
 
     if options['--list-by-publication-date']:
         sys.stdout.write(list_by_publication_date())
+    elif options['--subject-overview']:
+        sys.stdout.write(list_subjects())
+    elif options['--subject']:
+        sys.stdout.write(subject(options['--subject']))
 
 if __name__ == '__main__':
     main()
+
+
+
+'''
+{
+  "attribution": "University of Chicago",
+  "viewingHint": "multi-part",
+  "@type": "sc:Collection",
+  "description": "Options for browsing the University of Chicago Library maps digital collecton.",
+  "@id": "https://iiif-collection.lib.uchicago.edu/maps/maps.json",
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "members": [
+    {
+      "@type": "sc:Collection",
+      "viewingHint": "multi-part",
+      "@id": "https://iiif-collection.lib.uchicago.edu/maps/chisoc/chisoc.json",
+      "label": "Social Scientists Maps Collection"
+    },
+    {
+      "@type": "sc:Collection",
+      "viewingHint": "multi-part",
+      "@id": "https://iiif-collection.lib.uchicago.edu/maps/maps-collections.json",
+      "label": "All Maps Collections"
+    },
+    {
+      "@type": "sc:Collection",
+      "viewingHint": "multi-part",
+      "@id": "https://iiif-collection.lib.uchicago.edu/maps/maps-full-list.json",
+      "label": "Browsing the University of Chicago Library Maps Digital Collection Complete List"
+    }
+  ],
+  "label": "University of Chicago Library Maps Digital Collection Browsing Options"
+}
+'''
