@@ -3,6 +3,7 @@ jinja2
 paramiko
 Pillow
 python-magic
+requests
 rdflib
 uuid
 git+https://github.com/johnjung/metadata_converters
