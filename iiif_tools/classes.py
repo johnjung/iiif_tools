@@ -35,8 +35,16 @@ class SocSciMapsIIIFManifest:
     def __str__(self):
         manifest = Manifest(self.identifier())
         manifest.type = "sc:Manifest"
-        manifest.label = self.dc.title[0]
-        manifest.description = self.dc.description[0]
+        
+        try:
+            manifest.label = self.dc.title[0]
+        except IndexError:
+            manifest.label = ''
+
+        try:
+            manifest.description = self.dc.description[0]
+        except IndexError:
+            manifest.description = ''
     
         metadata = []
         metadata.append(MetadataField('Identifier', self.identifier()))
