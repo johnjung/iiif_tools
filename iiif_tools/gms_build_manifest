@@ -1,0 +1,194 @@
+#!/usr/bin/env python
+
+"""Usage:
+   gms_build_manifest <identifier>
+"""
+
+from docopt import docopt
+import csv
+import json
+import os
+import re
+import sys
+import urllib.parse
+import uuid
+
+import xml.etree.ElementTree as ElementTree
+from PIL import Image
+Image.MAX_IMAGE_PIXELS = 2000000000
+
+class GmsIIIFManifest:
+    """Make a manifest for a goodspeed document. 
+       e.g. https://iiif-manifest.lib.uchicago.edu/gms/0019/gms-0019.json
+
+    """
+
+    def __init__(self, identifier, title, date, description, attribution):
+
+        self.identifier = identifier
+        self.title = title
+        self.date = date
+        self.description = description
+        self.attribution = attribution
+
+        self.directory = '/data/digital_collections/IIIF/IIIF_Files/gms/{}'.format(self.identifier)
+
+    def _get_manifest_url(self):
+       return 'https://iiif-manifest.lib.uchicago.edu/{}/{}/{}.json'.format(
+           self.identifier.split('-')[0],
+           self.identifier.split('-')[1],
+           self.identifier
+       )
+
+    def get_width(self, n):
+        tifs = []
+        for f in os.listdir('{}/tifs'.format(self.directory)):
+            tifs.append(f)
+        tifs.sort()
+        width, _ = Image.open('{}/tifs/{}'.format(self.directory, tifs[n])).size
+        return width
+            
+    def get_height(self, n):
+        tifs = []
+        for f in os.listdir('{}/tifs'.format(self.directory)):
+            tifs.append(f)
+        tifs.sort()
+        _, height = Image.open('{}/tifs/{}'.format(self.directory, tifs[n])).size
+        return height
+
+    def get_imageserver_url(self, n):
+        path = 'gms/{0}/tifs/{0}-{1}.tif'.format(self.identifier, str(n+1).zfill(3))
+        return 'https://iiif-server.lib.uchicago.edu/{}'.format(urllib.parse.quote(path, safe=''))
+
+    def data(self):
+        manifest = {
+            '@context': 'http://iiif.io/api/presentation/2/context.json',
+            '@id': self._get_manifest_url(),
+            '@type': 'sc:Manifest',
+            'metadata': [
+                {
+                    'label': 'Title',
+                    'value': self.title
+                },
+                {
+                    'label': 'Identifier',
+                    'value': self.identifier
+                },
+                {
+                    'label': 'Date',
+                    'value': self.date
+                }
+            ],
+            'description': self.description,
+            'logo': 'https://www.lib.uchicago.edu/static/base/images/color-logo.png',
+            'license': 'http://campub.lib.uchicago.edu/rights/',
+            'attribution': 'University of Chicago Library',
+            'label': self.title + ', ' + self.date,
+            'sequences': [
+                {
+                    '@id': 'https://{}'.format(str(uuid.uuid1())),
+                    '@type': 'sc:Sequence',
+                    'canvases': [],
+                }
+            ],
+            'structures': [],
+            'viewingDirection': 'left-to-right'
+        }
+
+        for e, entry in enumerate(os.listdir(self.directory + '/tifs/')):
+            manifest['sequences'][0]['canvases'].append({
+                '@id': 'https://{}'.format(str(uuid.uuid1())),
+                '@type': 'sc:Canvas',
+                'label': 'Page ' + str(e),
+                'height': self.get_height(e),
+                'width': self.get_width(e),
+                'images': [
+                    {
+                        '@context': 'http://iiif.io/api/presentation/2/context.json',
+                        '@id': 'https://{}'.format(uuid.uuid1()),
+                        '@type': 'oa:Annotation',
+                        'motivation': 'sc:Painting',
+                        'resource': {
+                         '@id': 'https://{}'.format(uuid.uuid1()),
+                         '@type': 'dctypes:Image',
+                         'format': 'image/jpeg',
+                         'height': self.get_height(e),
+                         'width': self.get_width(e),
+                         'service': {
+                             '@context': 'http://iiif.io/api/image/2/context.json',
+                             '@id': self.get_imageserver_url(e),
+                             'profile': [
+                                 'http://iiif.io/api/image/2/level2.json',
+                                 {
+                                     'supports': [
+                                         'canonicalLinkHeader',
+                                         'profileLinkHeader',
+                                         'mirroring',
+                                         'rotationArbitrary',
+                                         'regionSquare',
+                                         'sizeAboveFull'
+                                     ],
+                                     'qualities': [
+                                         'default',
+                                         'gray',
+                                         'bitonal'
+                                     ],
+                                     'format': [
+                                         'jpg',
+                                         'png',
+                                         'gif',
+                                         'webp'
+                                     ]
+                                 }
+                             ]
+                         }
+                        },
+                        'on': 'https://{}'.format(uuid.uuid1())
+                    }
+                ]
+            })
+
+        return manifest
+
+
+if __name__ == '__main__':
+    arguments = docopt(__doc__)
+    # e.g. "gms-0019"
+    identifier = arguments['<identifier>']
+    # e.g. "Ms. 19"
+    ms_identifier = 'Ms. {}'.format(identifier.split('-')[1].lstrip('0'))
+
+    title = None
+    date = None
+    with open('metadata/gms.xml') as f:
+        gms = ElementTree.fromstring(f.read())
+        for ms_item in gms.findall('msItem'):
+            if ms_item.find('manuscript').text.startswith(ms_identifier):
+                date = ms_item.find('date_of_origin').text
+                title = '{}: {} {}'.format(
+                    ms_identifier, 
+                    ms_item.find('catTitle/span[@class="manuscripttitle"]').text,
+                    ms_item.find('catTitle/span[@class="additionalinfo"]').text
+                )
+
+    assert date is not None
+    assert title is not None
+
+    # turn identifier (e.g. gms-0019) into Ms number: e.g. "Ms. 19"
+    # find the //msItem where manuscript equals that. 
+    # get span class='manuscripttitle'
+    # get date_of_origin
+
+    print(
+        json.dumps(
+            GmsIIIFManifest(
+                identifier,
+                title,
+                date,
+                'New Testament Manuscript Collection from the University of Chicago.',
+                'University of Chicago Library'
+            ).data(),
+            indent=4,
+            sort_keys=True
+        )
+    )

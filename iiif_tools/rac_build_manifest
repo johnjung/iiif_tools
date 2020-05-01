@@ -1,0 +1,174 @@
+#!/usr/bin/env python
+
+"""Usage:
+   rac_build_manifest <identifier>
+"""
+
+from docopt import docopt
+import csv
+import json
+import os
+import re
+import sys
+import urllib.parse
+import uuid
+
+import xml.etree.ElementTree as ElementTree
+from PIL import Image
+Image.MAX_IMAGE_PIXELS = 2000000000
+
+class RacIIIFManifest:
+    """Make a manifest for one of the rose and chess documents. 
+       e.g. https://iiif-manifest.lib.uchicago.edu/rac/0392/rac-0392.json
+       e.g. https://iiif-manifest.lib.uchicago.edu/rac/1380/rac-1380.json
+
+    """
+
+    def __init__(self, identifier, title, description, attribution):
+
+        self.identifier = identifier
+        self.title = title
+        self.description = description
+        self.attribution = attribution
+
+        self.directory = '/data/digital_collections/IIIF/IIIF_Files/rac/{}'.format(self.identifier.split('-')[1])
+
+    def _get_manifest_url(self):
+       return 'https://iiif-manifest.lib.uchicago.edu/{}/{}/{}.json'.format(
+           self.identifier.split('-')[0],
+           self.identifier.split('-')[1],
+           self.identifier
+       )
+
+    def get_width(self, n):
+        tifs = []
+        for f in os.listdir('{}/tifs'.format(self.directory)):
+            tifs.append(f)
+        tifs.sort()
+        width, _ = Image.open('{}/tifs/{}'.format(self.directory, tifs[n])).size
+        return width
+            
+    def get_height(self, n):
+        tifs = []
+        for f in os.listdir('{}/tifs'.format(self.directory)):
+            tifs.append(f)
+        tifs.sort()
+        _, height = Image.open('{}/tifs/{}'.format(self.directory, tifs[n])).size
+        return height
+
+    def get_imageserver_url(self, n):
+        path = 'rac/{0}/tifs/rac-{0}-{1}.tif'.format(self.identifier.split('-')[1], str(n+1).zfill(3))
+        return 'https://iiif-server.lib.uchicago.edu/{}'.format(urllib.parse.quote(path, safe=''))
+
+    def data(self):
+        manifest = {
+            '@context': 'http://iiif.io/api/presentation/2/context.json',
+            '@id': self._get_manifest_url(),
+            '@type': 'sc:Manifest',
+            'metadata': [
+                {
+                    'label': 'Title',
+                    'value': self.title
+                },
+                {
+                    'label': 'Identifier',
+                    'value': self.identifier
+                }
+            ],
+            'description': self.description,
+            'logo': 'https://www.lib.uchicago.edu/static/base/images/color-logo.png',
+            'license': 'http://campub.lib.uchicago.edu/rights/',
+            'attribution': self.attribution,
+            'label': self.title,
+            'sequences': [
+                {
+                    '@id': 'https://{}'.format(str(uuid.uuid1())),
+                    '@type': 'sc:Sequence',
+                    'canvases': [],
+                }
+            ],
+            'structures': [],
+            'viewingDirection': 'left-to-right'
+        }
+
+        for e, entry in enumerate(os.listdir(self.directory + '/tifs/')):
+            manifest['sequences'][0]['canvases'].append({
+                '@id': 'https://{}'.format(str(uuid.uuid1())),
+                '@type': 'sc:Canvas',
+                'label': 'Page ' + str(e),
+                'height': self.get_height(e),
+                'width': self.get_width(e),
+                'images': [
+                    {
+                        '@context': 'http://iiif.io/api/presentation/2/context.json',
+                        '@id': 'https://{}'.format(uuid.uuid1()),
+                        '@type': 'oa:Annotation',
+                        'motivation': 'sc:Painting',
+                        'resource': {
+                         '@id': 'https://{}'.format(uuid.uuid1()),
+                         '@type': 'dctypes:Image',
+                         'format': 'image/jpeg',
+                         'height': self.get_height(e),
+                         'width': self.get_width(e),
+                         'service': {
+                             '@context': 'http://iiif.io/api/image/2/context.json',
+                             '@id': self.get_imageserver_url(e),
+                             'profile': [
+                                 'http://iiif.io/api/image/2/level2.json',
+                                 {
+                                     'supports': [
+                                         'canonicalLinkHeader',
+                                         'profileLinkHeader',
+                                         'mirroring',
+                                         'rotationArbitrary',
+                                         'regionSquare',
+                                         'sizeAboveFull'
+                                     ],
+                                     'qualities': [
+                                         'default',
+                                         'gray',
+                                         'bitonal'
+                                     ],
+                                     'format': [
+                                         'jpg',
+                                         'png',
+                                         'gif',
+                                         'webp'
+                                     ]
+                                 }
+                             ]
+                         }
+                        },
+                        'on': 'https://{}'.format(uuid.uuid1())
+                    }
+                ]
+            })
+
+        return manifest
+
+
+if __name__ == '__main__':
+    arguments = docopt(__doc__)
+
+    titles = {
+        'rac-0392': 'Le Jeu des échecs moralisé, University of Chicago Library MS 392',
+        'rac-1380': 'Le Roman de la Rose, University of Chicago Library MS 1380'
+    }
+
+    attributions = {
+        'rac-0392': 'Le Jeu des échecs moralisé, University of Chicago Library MS 392, Special Collection Research Center, University of Chicago Library.',
+        'rac-1380': 'Le Roman de la Rose, University of Chicago Library MS 1380, Special Collection Research Center, University of Chicago Library. Image courtesy of The Sheridan Libraries, Johns Hopkins University.'
+    }
+
+    print(
+        json.dumps(
+            RacIIIFManifest(
+                arguments['<identifier>'],
+                titles[arguments['<identifier>']],
+                'New Testament Manuscript Collection from the University of Chicago.',
+                attributions[arguments['<identifier>']]
+            ).data(),
+            indent=4,
+            sort_keys=True
+        )
+    )

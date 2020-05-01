@@ -17,8 +17,8 @@ from PIL import Image
 Image.MAX_IMAGE_PIXELS = 1000000000
 
 class SocSciMapsIIIFManifest:
-    def __init__(self, marc_str):
-        self.dc = SocSciMapsMarcXmlToDc(marc_str)
+    def __init__(self, digital_record, print_record):
+        self.dc = SocSciMapsMarcXmlToDc(digital_record, print_record)
 
     def identifier(self):
         c = re.sub('^.*\/', '', self.dc.identifier[0])

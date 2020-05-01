@@ -111,7 +111,7 @@ def list_subjects():
         collection['members'].append({
             '@type': 'sc:Collection',
             '@id':
-            'https://iiif-manifest.lib.uchicago.edu/maps/chisoc/chisoc-subjects-{}.json'.format(s.lower().replace(' ', '-')),
+            'https://iiif-collection.lib.uchicago.edu/maps/chisoc/chisoc-subjects-{}.json'.format(s.lower().replace(' ', '-')),
             'viewingHint': 'multi-part',
             'label': s
         })

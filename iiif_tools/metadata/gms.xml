@@ -1,0 +1,1111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<ManuscriptList> 
+ 
+<msItem n="1">
+<manuscript>Ms. 19</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 19</span>,
+ <span class='manuscripttitle'>New Testament. Gospels. Harmonies (Evangeliorum Quattuor Harmonia).</span>
+ <span class='additionalinfo'>Germany? 15th century.</span>
+ </catTitle>
+<title>New Testament. Gospels. Harmonies</title>
+<other_name>Evangeliorum Quattuor Harmonia</other_name>
+ <place_of_origin>Germany</place_of_origin>
+ <date_of_origin>15th century</date_of_origin>
+<language>Latin</language>
+ </msItem>
+
+ <msItem n="2"> 
+<manuscript>Ms. 46</manuscript>
+  <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 46</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Haskell Gospels). Greg. 1290.</span>
+ <span class='additionalinfo'>Greece, 13th century.</span>
+ </catTitle>
+<title>New Testament. Gospels</title>
+<other_name>Haskell Gospels</other_name>
+ <gregory_number>1290</gregory_number>
+ <place_of_origin>Greece</place_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+<language>Greek</language>
+  </msItem>
+ 
+ <msItem n="3"> 
+<manuscript>Ms. 50</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 50</span>,
+ <span class='manuscripttitle'>Lectionary (Haskell Lectionary). Greg. l 1555.</span>
+ <span class='additionalinfo'>Greece, 13th century.</span>
+ </catTitle>
+<title>Lectionary</title>
+<other_name>Haskell Lectionary</other_name>
+<gregory_number>l 1555</gregory_number>
+<place_of_origin>Greece</place_of_origin>
+<date_of_origin>13th century</date_of_origin>
+<language>Greek</language>
+</msItem>
+ 
+<msItem n="4"> 
+<manuscript>Ms. 62</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 62</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Sir Edwin Pears Gospels). Greg. 2610.</span>
+ <span class='additionalinfo'>Balkan Peninsula, 13th century.</span>
+ </catTitle>
+<title>New Testament. Gospels</title>
+<other_name>Sir Edwin Pears Gospels</other_name>
+<gregory_number>2610</gregory_number>
+<place_of_origin>Balkan Peninsula</place_of_origin>
+<date_of_origin>13th century</date_of_origin>
+<language>Greek</language>
+</msItem>
+ 
+ <msItem n="5"> 
+<manuscript>Ms. 125</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 125</span>,
+  <span class='manuscripttitle'>Talismanic Scroll (D’Hendecourt Scroll). Greg. T7.</span>  
+  <span class='additionalinfo'>Constantinople or Trabzon, Turkey (Trebizond), 14th century.</span>
+ </catTitle>
+  <title>Talismanic Scroll</title>
+<other_name>D’Hendecourt Scroll</other_name>
+<gregory_number>T7</gregory_number>
+  <place_of_origin>Constantinople</place_of_origin>
+  <place_of_origin>Trabzon, Turkey (Trebizond)</place_of_origin>
+  <date_of_origin>14th century</date_of_origin>
+<language>Greek</language>
+<language>Arabic</language>
+</msItem>
+ 
+ <msItem n="6"> 
+<manuscript>Ms. 126</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 126</span>,
+ <span class='manuscripttitle'>Bible. New Testament (Scott Brown New Testament). Greg. 2404.</span> 
+ <span class='additionalinfo'>Greece or Asia Minor, 13th century.</span>
+ </catTitle>
+<title>Bible. New Testament</title>
+<other_name>Scott Brown New Testament</other_name>
+<gregory_number>2404</gregory_number>
+<place_of_origin>Greece</place_of_origin>
+<place_of_origin>Asia Minor</place_of_origin>
+  <date_of_origin>13th century</date_of_origin>
+<language>Greek</language>
+</msItem>
+ 
+<msItem n="7"> 
+<manuscript>Ms. 128</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 128</span>,
+ <span class='manuscripttitle'>Lectionary (Argos Lectionary). Greg. l 1599.</span> 
+ <span class='additionalinfo'>Constantinople? 9th or 10th century.</span>
+ </catTitle>
+<title>Lectionary</title>
+<other_name>Argos Lectionary</other_name>
+<gregory_number>l 1599</gregory_number>
+<place_of_origin>Constantinople</place_of_origin>
+<date_of_origin>9th century</date_of_origin>
+<date_of_origin>10th century</date_of_origin>
+<language>Greek</language>
+</msItem>
+ 
+<msItem n="8"> 
+<manuscript>Ms. 129</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 129</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Nicolaus Gospels). Greg. 1152.</span> 
+ <span class='additionalinfo'>Édhessa, Greece (Macedonia), 1133.</span>
+ </catTitle>
+<title>New Testament. Gospels</title>
+<other_name>Nicolaus Gospels</other_name>
+<gregory_number>1152</gregory_number>
+<place_of_origin>Édhessa, Greece (Macedonia)</place_of_origin>
+<date_of_origin>1133</date_of_origin>
+<language>Greek</language>
+</msItem>
+ 
+  <msItem n="9"> 
+ <manuscript>Ms. 130</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 130</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Barnabas Gospels). Greg. 2405.</span> 
+   <span class='additionalinfo'>Antalya, Turkey (Adalia)? 13th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Barnabas Gospels</other_name>
+ <gregory_number>2405</gregory_number>
+    <place_of_origin>Antalya, Turkey (Adalia)</place_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+ <language>Greek</language>
+  </msItem>
+ 
+   <msItem n="10"> 
+ <manuscript>Ms. 131</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 131</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Chrysanthus Gospels). Greg. 2394.</span> 
+   <span class='additionalinfo'>Balkan Peninsula? 12th or 13th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Chrysanthus Gospels</other_name>
+ <gregory_number>2394</gregory_number>
+     <place_of_origin>Balkan Peninsula</place_of_origin>
+     <date_of_origin>12th century</date_of_origin>
+     <date_of_origin>13th century</date_of_origin>
+    <language>Greek</language>
+    <language>Church Slavonic</language>
+</msItem>
+ 
+ <msItem n="11"> 
+ <manuscript>Ms. 132</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 132</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Demetrius Gospels). Greg. 2398.</span> 
+ <span class='additionalinfo'>Balkan Peninsula or Asia Minor, 14th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Demetrius Gospels</other_name>
+ <gregory_number>2398</gregory_number>
+ <place_of_origin>Balkan Peninsula</place_of_origin>
+ <place_of_origin>Asia Minor</place_of_origin>
+  <date_of_origin>14th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+ <msItem n="12"> 
+ <manuscript>Ms. 133</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 133</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Exoteicho Gospels). Greg. 2396.</span> 
+  <span class='additionalinfo'>Trabzon, Turkey (Trebizond), 12th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Exoteicho Gospels</other_name>
+ <gregory_number>2396</gregory_number>
+  <place_of_origin>Trabzon, Turkey (Trebizond)</place_of_origin>
+  <date_of_origin>12th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+ <msItem n="13"> 
+ <manuscript>Ms. 134</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 134</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Larissa Gospels). Greg. 2406.</span> 
+ <span class='additionalinfo'>Thessaly, Greece? 13th or 14th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Larissa Gospels</other_name>
+ <gregory_number>2406</gregory_number>
+ <place_of_origin>Thessaly, Greece</place_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+ <date_of_origin>14th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+  <msItem n="14"> 
+ <manuscript>Ms. 135</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 135</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Hyacinthus Gospels). Greg. 2397.</span> 
+ <span class='additionalinfo'>Greece or Asia Minor, 1303.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Hyacinthus Gospels</other_name>
+ <gregory_number>2397</gregory_number>
+ <place_of_origin>Greece</place_of_origin>
+ <place_of_origin>Asia Minor</place_of_origin>
+ <date_of_origin>1303</date_of_origin>
+ <language>Greek</language>
+  </msItem>
+ 
+  <msItem n="15"> 
+ <manuscript>Ms. 136</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 136</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Thomas Gospels). Greg. 2407.</span> 
+ <span class='additionalinfo'>Greece or Asia Minor, 1332.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Thomas Gospels</other_name>
+ <gregory_number>2407</gregory_number>
+ <place_of_origin>Greece</place_of_origin>
+   <place_of_origin>Asia Minor</place_of_origin>
+ <date_of_origin>1332</date_of_origin>
+ <language>Greek</language>
+  </msItem>
+ 
+   <msItem n="16"> 
+ <manuscript>Ms. 137</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 137</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Isaac Gospels). Greg. 2399.</span> 
+  <span class='additionalinfo'>Trabzon, Turkey (Trebizond)? 14th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Isaac Gospels</other_name>
+ <gregory_number>2399</gregory_number>
+    <place_of_origin>Trabzon, Turkey (Trebizond)</place_of_origin>
+ <date_of_origin>14th century</date_of_origin>
+ <language>Greek</language>
+   </msItem>
+ 
+   <msItem n="17"> 
+ <manuscript>Ms. 138</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 138</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Circle Gospels). Greg. 2222.</span>
+ <span class='additionalinfo'>14th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Circle Gospels</other_name>
+ <gregory_number>2222</gregory_number>
+ <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>14th century</date_of_origin>
+ <language>Greek</language>
+   </msItem>
+ 
+<msItem n="18"> 
+ <manuscript>Ms. 139</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 139</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Gospels of the Fluting Shepherd).</span>
+ <span class='additionalinfo'>15th or 16th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Gospels of the Fluting Shepherd</other_name>
+ <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>15th century</date_of_origin>
+ <date_of_origin>16th century</date_of_origin>
+ <language>Armenian</language>
+</msItem>
+ 
+ <msItem n="19"> 
+ <manuscript>Ms. 140</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 140</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Garabed Gospels).</span>
+ <span class='additionalinfo'>Armenia, 1609.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Garabed Gospels</other_name>
+ <place_of_origin>Armenia</place_of_origin>
+ <date_of_origin>1609</date_of_origin>
+ <language>Armenian</language>
+ </msItem>
+ 
+  <msItem n="20"> 
+ <manuscript>Ms. 141</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 141</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Janina Gospels). Greg. 2409.</span>
+   <span class='additionalinfo'>Patmos, Greece, 12th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Janina Gospels</other_name>
+ <gregory_number>2409</gregory_number>
+ <place_of_origin>Patmos, Greece</place_of_origin>
+    <date_of_origin>12th century</date_of_origin>
+<language>Greek</language>
+  </msItem>
+ 
+   <msItem n="21"> 
+ <manuscript>Ms. 142</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 142</span>,
+ <span class='manuscripttitle'>New Testament. Acts. Epistles of Paul. Catholic Epistles. Lectionary 
+  (Theophanes Praxapostolos and Theophanes Lectionary). Greg. 2401 and l 1609.</span>
+ <span class='additionalinfo'>Balkan Peninsula? 12th century.</span>
+ </catTitle>
+ <title>New Testament. Acts. Epistles of Paul. Catholic Epistles. Lectionary</title>
+<other_name>Theophanes Praxapostolos</other_name>
+<other_name>Theophanes Lectionary</other_name>
+ <gregory_number>2401</gregory_number>
+<gregory_number>l 1609</gregory_number>
+ <place_of_origin>Balkan Peninsula</place_of_origin>
+ <date_of_origin>12th century</date_of_origin>
+ <language>Greek</language>
+   </msItem>
+ 
+ <msItem n="22"> 
+ <manuscript>Ms. 166</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 166</span>,
+ <span class='manuscripttitle'>Trephologion (John Adam Service Book). Greg. l 1600.</span>
+ <span class='additionalinfo'>Italy or Greece, 16th century.</span> 
+ </catTitle>
+ <title>Trephologion</title>
+ <other_name>John Adam Service Book</other_name>
+ <gregory_number>l 1600</gregory_number>
+ <place_of_origin>Italy</place_of_origin>
+   <place_of_origin>Greece</place_of_origin>
+   <date_of_origin>16th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+  <msItem n="23"> 
+ <manuscript>Ms. 202</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 202</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Edward Goodman Gospels). Greg. 2608.</span> 
+ <span class='additionalinfo'>Greece or Asia Minor, 13th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Edward Goodman Gospels</other_name>
+ <gregory_number>2608</gregory_number>
+ <place_of_origin>Greece</place_of_origin>
+ <place_of_origin>Asia Minor</place_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+ <language>Greek</language>
+  </msItem>
+ 
+<msItem n="24"> 
+<manuscript>Ms. 229</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 229</span>,
+ <span class='manuscripttitle'>New Testament. Acts. Epistles of Paul. Catholic Epistles. Revelation (Step‛anos Praxapostolos).</span>
+ <span class='additionalinfo'>Cyprus, 1284-1312.</span>
+ </catTitle>
+ <title>New Testament. Acts. Epistles of Paul. Catholic Epistles. Revelation</title>
+ <other_name>Step‛anos Praxapostolos</other_name>
+<place_of_origin>Cyprus</place_of_origin>
+<date_of_origin>1284-1312</date_of_origin>
+ <language>Armenian</language>
+</msItem>
+ 
+ <msItem n="25"> 
+ <manuscript>Ms. 232</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 232</span>,
+  <span class='manuscripttitle'>New Testament. Gospels (Phillipps Gospels). Greg. 677.</span>
+ <span class='additionalinfo'>Greece, 13th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+  <other_name>Phillipps Gospels</other_name>
+ <gregory_number>677</gregory_number>
+ <place_of_origin>Greece</place_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+<language>Greek</language>
+ </msItem>
+ 
+  <msItem n="26"> 
+ <manuscript>Ms. 234</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 234</span>,
+  <span class='manuscripttitle'>New Testament. Gospels (Yovanēs Gospels).</span>
+ <span class='additionalinfo'>Constantinople, 1654.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+   <other_name>Yovanēs Gospels</other_name>
+ <place_of_origin>Constantinople</place_of_origin>
+ <date_of_origin>1654</date_of_origin>
+ <language>Armenian</language>
+  </msItem>
+ 
+ <msItem n="27"> 
+ <manuscript>Ms. 251</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 251</span>,
+ <span class='manuscripttitle'>New Testament. Gospels. John (Goodspeed Gospel of John).</span>
+ <span class='additionalinfo'>Ethiopia, 18th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels. John</title>
+ <other_name>Goodspeed Gospel of John</other_name>
+ <place_of_origin>Ethiopia</place_of_origin>
+ <date_of_origin>18th century</date_of_origin>
+  <language>Gə‘əz (Ethiopic)</language>
+ </msItem>
+ 
+  <msItem n="28"> 
+ <manuscript>Ms. 270</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 270</span>,
+ <span class='manuscripttitle'>Hymns and Prayers (Ethiopic Hymns and Prayers).</span>
+ <span class='additionalinfo'>Ethiopia, 18th century.</span>
+ </catTitle>
+<title>Hymns and Prayers</title> 
+ <other_name>Ethiopic Hymns and Prayers</other_name>
+<place_of_origin>Ethiopia</place_of_origin>
+<date_of_origin>18th century</date_of_origin>
+   <language>Gə‘əz (Ethiopic)</language>
+   <language>Amharic</language>
+   <language>Arabic</language>
+   <language>Hebrew</language>
+  </msItem>
+ 
+   <msItem n="29"> 
+ <manuscript>Ms. 275</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 275</span>,
+  <span class='manuscripttitle'>Hymnal (Astuacatur Hymnal).</span>
+ <span class='additionalinfo'>Constantinople, 1654.</span>
+ </catTitle>
+ <title>Hymnal</title> 
+ <other_name>Astuacatur Hymnal</other_name>
+    <place_of_origin>Constantinople</place_of_origin>
+ <date_of_origin>1654</date_of_origin>
+ <language>Armenian</language>
+   </msItem>
+ 
+ <msItem n="30"> 
+ <manuscript>Ms. 277</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 277</span>,
+ <span class='manuscripttitle'>Euchologion (Bishop Stevens Manuscript).</span>
+ <span class='additionalinfo'>Crete? 16th century.</span>
+ </catTitle>
+ <title>Euchologion</title>
+ <other_name>Bishop Stevens Manuscript</other_name>
+ <place_of_origin>Crete</place_of_origin>
+ <date_of_origin>16th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+  <msItem n="31"> 
+ <manuscript>Ms. 338</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 338</span>,
+  <span class='manuscripttitle'>New Testament. Gospels. Mark (Harold Lamb Manuscript of Mark).</span>
+ <span class='additionalinfo'>9th or 10th century.</span>
+ </catTitle>
+   <title>New Testament. Gospels. Mark</title>
+ <other_name>Harold Lamb Manuscript of Mark</other_name>
+   <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>9th century</date_of_origin>
+ <date_of_origin>10th century</date_of_origin>
+ <language>Armenian</language>
+  </msItem>
+ 
+ <msItem n="32"> 
+ <manuscript>Ms. 342</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 342</span>,
+  <span class='manuscripttitle'>New Testament. Gospels. Matthew (Vulgate Double Leaf Matthew Fragment).</span>
+ <span class='additionalinfo'>Italy? 14th century.</span>
+ </catTitle>
+  <title>New Testament. Gospels. Matthew</title>
+ <other_name>Vulgate Double Leaf Matthew Fragment</other_name>
+<place_of_origin>Italy</place_of_origin>
+ <date_of_origin>14th century</date_of_origin>
+ <language>Latin</language>
+   </msItem>
+ 
+  <msItem n="33"> 
+ <manuscript>Ms. 378</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 378</span>,
+ <span class='manuscripttitle'>Bible (Biblia Sacra Latina).</span>
+ <span class='additionalinfo'>Italy, 15th century.</span>
+ </catTitle>
+ <title>Bible</title>
+ <other_name>Biblia Sacra Latina</other_name>
+ <place_of_origin>Italy</place_of_origin>
+ <date_of_origin>15th century</date_of_origin>
+ <language>Latin</language>
+    </msItem>
+ 
+<msItem n="34"> 
+ <manuscript>Ms. 702</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 702</span>,
+ <span class='manuscripttitle'>Lectionary (Trebizond Lectionary). Greg. l 1598.</span>
+ <span class='additionalinfo'>10th century.</span>
+ </catTitle>
+ <title>Lectionary</title>
+ <other_name>Trebizond Lectionary</other_name>
+ <gregory_number>l 1598</gregory_number>
+ <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>10th century</date_of_origin>
+ <language>Greek</language>
+</msItem>
+ 
+ <msItem n="35"> 
+ <manuscript>Ms. 715</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 715</span>,
+ <span class='manuscripttitle'>Lectionary (Serpent Lectionary). Greg. l 1642.</span>
+ <span class='additionalinfo'>Constantinople, 13th century.</span>
+ </catTitle>
+ <title>Lectionary</title>
+ <other_name>Serpent Lectionary</other_name>
+ <gregory_number>l 1642</gregory_number>
+ <place_of_origin>Constantinople</place_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+ <msItem n="36"> 
+ <manuscript>Ms. 716</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 716</span>,
+  <span class='manuscripttitle'>New Testament. Syriac. Peshitta (Syriac New Testament Fragments).</span>
+ <span class='additionalinfo'>6th or 7th century.</span>
+ </catTitle>
+  <title>New Testament. Syriac. Peshitta</title>
+  <other_name>Syriac New Testament Fragments</other_name>
+  <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>6th century</date_of_origin>
+  <date_of_origin>7th century</date_of_origin>
+ <language>Syriac</language>
+  </msItem>
+ 
+ <msItem n="37"> 
+<manuscript>Ms. 727</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 727</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Georgius Gospels). Greg. 2266.</span>
+ <span class='additionalinfo'>Greece, 13th century.</span> 
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Georgius Gospels</other_name>
+ <gregory_number>2266</gregory_number>
+   <place_of_origin>Greece</place_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+ <language>Greek</language>
+   </msItem>
+ 
+ <msItem n="38"> 
+ <manuscript>Ms. 773</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 773</span>,
+ <span class='manuscripttitle'>New Testament. Acts (Ananias Fragment).</span>
+ <span class='additionalinfo'>15th or 16th century.</span>
+ </catTitle>
+ <title>New Testament. Acts</title>
+ <other_name>Ananias Fragment</other_name>
+  <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>15th century</date_of_origin>
+  <date_of_origin>16th century</date_of_origin>
+ <language>Armenian</language>
+    </msItem>
+ 
+ <msItem n="39"> 
+ <manuscript>Ms. 781</manuscript>
+ <catTitle>  
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 781</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Khouban Gospels).</span>
+ <span class='additionalinfo'>Şəmkir, Azerbaijan (Shamkhor), 1670.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Khouban Gospels</other_name>
+ <place_of_origin>Şəmkir, Azerbaijan (Shamkhor)</place_of_origin>
+ <date_of_origin>1670</date_of_origin>
+ <language>Armenian</language>
+ </msItem>
+ 
+ <msItem n="40"> 
+ <manuscript>Ms. 823</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 823</span>,
+  <span class='manuscripttitle'>New Testament. Syriac. Peshitta (Teheran Gospel Fragments).</span>
+ <span class='additionalinfo'>13th century.</span>
+ </catTitle>
+  <title>New Testament. Syriac. Peshitta</title>
+ <other_name>Teheran Gospel Fragments</other_name>
+  <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+ <language>Syriac</language>
+  </msItem>
+ 
+ <msItem n="41"> 
+ <manuscript>Ms. 828</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 828</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Tetragram Gospels). Greg. 2411.</span>
+ <span class='additionalinfo'>12th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Tetragram Gospels</other_name>
+ <gregory_number>2411</gregory_number>
+  <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>12th century</date_of_origin>
+<language>Greek</language>
+   </msItem>
+ 
+ <msItem n="42"> 
+ <manuscript>Ms. 829</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 829</span>,
+  <span class='manuscripttitle'>New Testament. Syriac. Peshitta (Kurdistan Fragments).</span>
+ <span class='additionalinfo'>9th century.</span>
+ </catTitle>
+  <title>New Testament. Syriac. Peshitta</title>
+ <other_name>Kurdistan Fragments</other_name>
+  <place_of_origin>Unknown Place of Origin</place_of_origin>
+  <date_of_origin>9th century</date_of_origin>
+ <language>Syriac</language>
+ </msItem>
+ 
+  <msItem n="43"> 
+ <manuscript>Ms. 862</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 862</span>,
+ <span class='manuscripttitle'>John Chrysostom, Saint, died 407, Homily 53 on Matthew.</span>
+ <span class='additionalinfo'>11th century.</span>
+ </catTitle>
+   <author>John Chrysostom, Saint, died 407</author>
+   <title>Homily 53 on Matthew</title> 
+   <other_name>Homily 53 on Matthew</other_name>
+   <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>11th century</date_of_origin>
+     <language>Greek</language>
+  </msItem>
+ 
+  <msItem n="44"> 
+ <manuscript>Ms. 879</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 879</span>,
+ <span class='manuscripttitle'>Lectionary (Lectionary of Constantine the Reader). Greg. l 1663.</span>
+ <span class='additionalinfo'>Greece or Asia Minor, 13th century.</span>
+ </catTitle>
+ <title>Lectionary</title>
+ <other_name>Lectionary of Constantine the Reader</other_name>
+ <gregory_number>l 1663</gregory_number>
+ <place_of_origin>Greece</place_of_origin>
+   <place_of_origin>Asia Minor</place_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+    <language>Greek</language>
+   </msItem>
+ 
+  <msItem n="45"> 
+ <manuscript>Ms. 899</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 899</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Gregory Matthew-Mark).</span>
+ <span class='additionalinfo'>9th or 10th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Gregory Matthew-Mark</other_name>
+   <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>9th century</date_of_origin>
+   <date_of_origin>10th century</date_of_origin>
+ <language>Armenian</language>
+    </msItem>
+ 
+  <msItem n="46"> 
+ <manuscript>Ms. 902</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 902</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Gamma Gospels). Greg. 2751.</span>
+  <span class='additionalinfo'>Greece or Asia Minor, 13th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Gamma Gospels</other_name>
+ <gregory_number>2751</gregory_number>
+   <place_of_origin>Greece</place_of_origin>
+   <place_of_origin>Asia Minor</place_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+ <language>Greek</language>
+     </msItem>
+ 
+ <msItem n="47"> 
+ <manuscript>Ms. 922</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 922</span>,
+ <span class='manuscripttitle'>New Testament. Acts. Epistles of Paul. Catholic Epistles 
+  (Ira Maurice Price Praxapostolos). Greg. 2412.</span>
+ <span class='additionalinfo'>12th century.</span>
+ </catTitle>
+ <title>New Testament. Acts. Epistles of Paul. Catholic Epistles</title>
+ <other_name>Ira Maurice Price Praxapostolos</other_name>
+ <gregory_number>2412</gregory_number>
+  <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>12th century</date_of_origin>
+ <language>Greek</language>
+      </msItem>
+ 
+ <msItem n="48"> 
+ <manuscript>Ms. 931</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 931</span>,
+ <span class='manuscripttitle'>New Testament. Revelation (Elizabeth Day
+ McCormick Apocalypse). Greg. 2402.</span>
+ <span class='additionalinfo'>Northern Greece or Balkan Peninsula? 17th century.</span>
+ </catTitle>
+ <title>New Testament. Revelation</title>
+ <other_name>Elizabeth Day McCormick Apocalypse</other_name>
+ <gregory_number>2402</gregory_number>
+ <place_of_origin>Northern Greece</place_of_origin>
+  <place_of_origin>Balkan Peninsula</place_of_origin>
+ <date_of_origin>17th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+  <msItem n="49"> 
+ <manuscript>Ms. 937</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 937</span>,
+ <span class='manuscripttitle'>Lectionary (Matthew Lectionary Fragment). Greg. l 1961.</span>
+ <span class='additionalinfo'>Italy, 14th century.</span>
+ </catTitle>
+ <title>Lectionary</title>
+ <other_name>Matthew Lectionary Fragment</other_name>
+ <gregory_number>l 1961</gregory_number>
+ <place_of_origin>Italy</place_of_origin>
+ <date_of_origin>14th century</date_of_origin>
+ <language>Greek</language>
+  </msItem>
+ 
+  <msItem n="50"> 
+ <manuscript>Ms. 938</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 938</span>,
+ <span class='manuscripttitle'>Menologion (Menologion for September).</span>
+ <span class='additionalinfo'>Constantinople, 11th or 12th century.</span>
+ </catTitle>
+ <title>Menologion</title>
+ <other_name>Menologion for September</other_name>
+ <place_of_origin>Constantinople</place_of_origin>
+ <date_of_origin>11th century</date_of_origin>
+ <date_of_origin>12th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+  <msItem n="51"> 
+ <manuscript>Ms. 939</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 939</span>,
+ <span class='manuscripttitle'>Lectionary (Luke Lectionary Fragment). Greg. l 1959.</span>
+ <span class='additionalinfo'>Constantinople? 13th century.</span>
+ </catTitle>
+ <title>Lectionary</title>
+ <other_name>Luke Lectionary Fragment</other_name>
+ <gregory_number>l 1959</gregory_number>
+ <place_of_origin>Constantinople</place_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+ <language>Greek</language>
+  </msItem>
+ 
+ <msItem n="52"> 
+ <manuscript>Ms. 943</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 943</span>,
+ <span class='manuscripttitle'>New Testament. Epistles of Paul (2 Timothy and Titus 
+  Praxapostolos Fragment). Greg. 2425.</span>
+ <span class='additionalinfo'>12th century.</span>
+ </catTitle>
+ <title>New Testament. Epistles of Paul</title> 
+  <other_name>2 Timothy and Titus Praxapostolos Fragment</other_name>
+ <gregory_number>2425</gregory_number>
+  <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>12th century</date_of_origin>
+  <language>Greek</language>
+ </msItem>
+ 
+  <msItem n="53"> 
+<manuscript>Ms. 947</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 947</span>,
+ <span class='manuscripttitle'>Lectionary (Symeon Stylites Lectionary). Greg. l 1963.</span>
+ <span class='additionalinfo'>Albania or Southern Italy, 11th or 12th century.</span>
+ </catTitle>
+ <title>Lectionary</title>
+ <other_name>Symeon Stylites Lectionary</other_name>
+<gregory_number>l 1963</gregory_number>
+<place_of_origin>Albania</place_of_origin>
+<place_of_origin>Southern Italy</place_of_origin>
+<date_of_origin>11th century</date_of_origin>
+ <date_of_origin>12th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+  <msItem n="54"> 
+ <manuscript>Ms. 948</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 948</span>,
+ <span class='manuscripttitle'>Lectionary (Lectionary of St. Menas the Wonder Worker). Greg. l 1964.</span> 
+ <span class='additionalinfo'>Cyprus, 12th or 13th century.</span>
+ </catTitle>
+ <title>Lectionary</title>
+ <other_name>Lectionary of St. Menas the Wonder Worker</other_name>
+ <gregory_number>l 1964</gregory_number>
+ <place_of_origin>Cyprus</place_of_origin>
+ <date_of_origin>12th century</date_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+ <language>Greek</language>
+  </msItem>
+ 
+  <msItem n="55"> 
+ <manuscript>Ms. 949</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 949</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Red Gospels of Ganjasar).</span> 
+ <span class='additionalinfo'>Armenia, 12th or 13th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Red Gospels of Ganjasar</other_name>
+ <place_of_origin>Armenia</place_of_origin>
+ <date_of_origin>12th century</date_of_origin>
+<date_of_origin>13th century</date_of_origin>
+ <language>Armenian</language>
+ </msItem>
+ 
+ <msItem n="56"> 
+ <manuscript>Ms. 951</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 951</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Vardan Gospels or Silver Gospels).</span>
+ <span class='additionalinfo'>1661.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Vardan Gospels</other_name>
+<other_name>Silver Gospels</other_name>
+  <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>1661</date_of_origin>
+  <language>Armenian</language>
+ </msItem>
+ 
+  <msItem n="57"> 
+ <manuscript>Ms. 953</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 953</span>,
+  <span class='manuscripttitle'>New Testament. Epistles (Peckover Epistles).</span> 
+ <span class='additionalinfo'>France or Flanders, 15th century.</span>
+ </catTitle>
+ <title>New Testament. Epistles</title>
+   <other_name>Peckover Epistles</other_name>
+<place_of_origin>France</place_of_origin>
+ <place_of_origin>Flanders</place_of_origin>
+ <date_of_origin>15th century</date_of_origin>
+ <language>Latin</language>
+  </msItem>
+ 
+ <msItem n="58"> 
+ <manuscript>Ms. 965</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 965</span>,
+ <span class='manuscripttitle'>Bible. New Testament (Rockefeller-McCormick New
+ Testament).  Greg. 2400.</span>
+ <span class='additionalinfo'>Cyprus or Palestine? 12th century.</span>
+ </catTitle>
+ <title>Bible. New Testament</title>
+ <other_name>Rockefeller-McCormick New Testament</other_name>
+ <gregory_number>2400</gregory_number>
+ <place_of_origin>Cyprus</place_of_origin>
+ <place_of_origin>Palestine</place_of_origin>
+ <date_of_origin>12th century</date_of_origin>
+ <language>Greek</language>
+</msItem>
+ 
+ <msItem n="59"> 
+ <manuscript>Ms. 972</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 972</span>,
+  <span class='manuscripttitle'>New Testament. Gospels. Mark (Archaic Mark). Greg. 2427.</span>
+  <span class='additionalinfo'> Greece? 19th or 20th century</span>
+ </catTitle>
+  <title>New Testament. Gospels. Mark</title>
+ <other_name>Archaic Mark </other_name>
+ <gregory_number>2427</gregory_number>
+  <place_of_origin>Greece</place_of_origin>
+ <date_of_origin>19th century</date_of_origin>
+  <date_of_origin>20th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+  <msItem n="60"> 
+ <manuscript>Ms. 995</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 995</span>,
+  <span class='manuscripttitle'>Magic Scroll (Ethiopic Magical Prayer Scroll).</span>
+ <span class='additionalinfo'>Ethiopia, 18th or 19th century.</span>
+ </catTitle>
+ <title>Magic Scroll</title>
+  <other_name>Ethiopic Magical Prayer Scroll</other_name>
+<place_of_origin>Ethiopia</place_of_origin>
+ <date_of_origin>18th century</date_of_origin>
+ <date_of_origin>19th century</date_of_origin>
+   <language>Gə‘əz (Ethiopic)</language>
+  </msItem>
+ 
+ <msItem n="61"> 
+ <manuscript>Ms. 996</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 996</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Hayrapet Gospels).</span>
+ <span class='additionalinfo'>Armenia? 17th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Hayrapet Gospels</other_name>
+  <place_of_origin>Armenia</place_of_origin>
+  <date_of_origin>17th century</date_of_origin>
+ <language>Armenian</language>
+ </msItem>
+ 
+ <msItem n="62"> 
+ <manuscript>Ms. 1017</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 1017</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Aleppo Gospels).</span>
+   <span class='additionalinfo'>Aleppo, Syria (Berea), 1624.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Aleppo Gospels</other_name>
+   <place_of_origin>Aleppo, Syria (Berea)</place_of_origin>
+ <date_of_origin>1624</date_of_origin>
+ <language>Armenian</language>
+ </msItem>
+ 
+  <msItem n="63"> 
+ <manuscript>Ms. 1040</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 1040</span>,
+  <span class='manuscripttitle'>New Testament. Gospels (Mik‛ayēl Gospels).</span>
+  <span class='additionalinfo'>Aleppo, Syria (Berea)? 15th century.</span> 
+ </catTitle>
+ <title>New Testament. Gospels</title>
+   <other_name>Mik‛ayēl Gospels</other_name>
+   <place_of_origin>Aleppo, Syria (Berea)?</place_of_origin>
+   <date_of_origin>15th century</date_of_origin>
+ <language>Armenian</language>
+ </msItem>
+ 
+ <msItem n="64"> 
+ <manuscript>Ms. 1054</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 1054</span>,
+ <span class='manuscripttitle'>New Testament. Gospels (Elfleda Bond Goodspeed Gospels). Greg. 2474.</span>
+ <span class='additionalinfo'>10th century.</span>
+ </catTitle>
+ <title>New Testament. Gospels</title>
+ <other_name>Elfleda Bond Goodspeed Gospels</other_name>
+ <gregory_number>2474</gregory_number>
+  <place_of_origin>Unknown Place of Origin</place_of_origin>
+ <date_of_origin>10th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+  <msItem n="65"> 
+ <manuscript>Ms. 1341</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 1341</span>,
+ <span class='manuscripttitle'>Lectionary (Matthew-Luke Lectionary Fragment). Greg. l 1960.</span>
+  <span class='additionalinfo'>Constantinople? 13th century.</span>
+ </catTitle>
+ <title>Lectionary</title>
+ <other_name>Matthew-Luke Lectionary Fragment</other_name>
+ <gregory_number>l 1960</gregory_number>
+   <place_of_origin>Constantinople</place_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+  <msItem n="66"> 
+ <manuscript>Ms. 1342</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 1342</span>,
+ <span class='manuscripttitle'>Lectionary (Willoughby Heothina Fragment). Greg. l 1962.</span>
+  <span class='additionalinfo'>Constantinople? 12th or 13th century.</span>
+ </catTitle>
+ <title>Lectionary</title>
+ <other_name>Willoughby Heothina Fragment</other_name>
+ <gregory_number>l 1962</gregory_number>
+   <place_of_origin>Constantinople</place_of_origin>
+<date_of_origin>12th century</date_of_origin>
+ <date_of_origin>13th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+  <msItem n="67"> 
+ <manuscript>Ms. 2057 (OIM)</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 2057 (OIM)</span>,
+  <span class='manuscripttitle'>New Testament. Gospels. Mark (Oxyrhynchus Mark Fragment). Greg. 069.</span>
+  <span class='additionalinfo'>Al-Bashnasā, Egypt (ancient Oxyrhynchus)? 5th or 6th century.</span>
+ </catTitle>
+   <title>New Testament. Gospels. Mark</title>
+   <other_name>Oxyrhynchus Mark Fragment</other_name>
+ <gregory_number>069</gregory_number> 
+   <place_of_origin>Al-Bashnasā, Egypt (ancient Oxyrhynchus)</place_of_origin>
+ <date_of_origin>5th century</date_of_origin>
+   <date_of_origin>6th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+ 
+ <msItem n="68"> 
+ <manuscript>Ms. 9351 (OIM)</manuscript>
+ <catTitle>
+ <span class='collection'>University of Chicago Library, Goodspeed Manuscript Collection</span>
+ <span class='manuscriptnumber'>Ms. 9351 (OIM)</span>,
+  <span class='manuscripttitle'>New Testament. Revelation (Oxyrhynchus Revelation Fragment). Greg. 0163.</span>
+  <span class='additionalinfo'>Al-Bashnasā, Egypt (ancient Oxyrhynchus)? 4th or 5th century.</span>
+ </catTitle>
+ <title>New Testament. Revelation</title>
+  <other_name>Oxyrhynchus Revelation Fragment</other_name>
+ <gregory_number>0163</gregory_number>
+  <place_of_origin>Al-Bashnasā, Egypt (ancient Oxyrhynchus)</place_of_origin>
+ <date_of_origin>4th century</date_of_origin>
+  <date_of_origin>5th century</date_of_origin>
+ <language>Greek</language>
+ </msItem>
+</ManuscriptList>       
+  
+ 
