@@ -83,7 +83,7 @@ class GmsIIIFManifest:
             'logo': 'https://www.lib.uchicago.edu/static/base/images/color-logo.png',
             'license': 'http://campub.lib.uchicago.edu/rights/',
             'attribution': 'University of Chicago Library',
-            'label': self.title + ', ' + self.date,
+            'label': self.title,
             'sequences': [
                 {
                     '@id': 'https://{}'.format(str(uuid.uuid1())),
