@@ -158,13 +158,26 @@ if __name__ == '__main__':
     # e.g. "Ms. 19"
     ms_identifier = 'Ms. {}'.format(identifier.split('-')[1].lstrip('0'))
 
+    # HACK because these manuscripts are listed as Ms. #### (OIM)
+    if identifier == 'gms-2057' or identifier == 'gms-9351':
+        ms_identifier_search = ms_identifier + ' (OIM)'
+    else:
+        ms_identifier_search = ms_identifier
+
     title = None
     date = None
     with open('metadata/gms.xml') as f:
         gms = ElementTree.fromstring(f.read())
         for ms_item in gms.findall('msItem'):
-            if ms_item.find('manuscript').text.startswith(ms_identifier):
-                date = ms_item.find('date_of_origin').text
+            if ms_item.find('manuscript').text == ms_identifier_search:
+                # HACK because these two manuscripts have multiple
+                # dates.
+                if identifier == 'gms-2057':
+                    date = '5th or 6th century'
+                elif identifier == 'gms-9351':
+                    date = '4th or 5th century'
+                else:
+                    date = ms_item.find('date_of_origin').text
                 title = '{}: {} {}'.format(
                     ms_identifier, 
                     ms_item.find('catTitle/span[@class="manuscripttitle"]').text,
