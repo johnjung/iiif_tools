@@ -99,7 +99,7 @@ class GmsIIIFManifest:
             manifest['sequences'][0]['canvases'].append({
                 '@id': 'https://{}'.format(str(uuid.uuid1())),
                 '@type': 'sc:Canvas',
-                'label': 'Page ' + str(e),
+                'label': 'Image {:03d}'.format(e + 1),
                 'height': self.get_height(e),
                 'width': self.get_width(e),
                 'images': [
