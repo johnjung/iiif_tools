@@ -5,15 +5,14 @@
 """
 
 from docopt import docopt
-import csv
 import json
-import os
 import re
+import requests
 import sys
 import urllib.parse
 import uuid
 
-import xml.etree.ElementTree as ElementTree
+from io import BytesIO
 from PIL import Image
 Image.MAX_IMAGE_PIXELS = 2000000000
 
@@ -24,14 +23,43 @@ class RacIIIFManifest:
 
     """
 
-    def __init__(self, identifier, title, description, attribution):
+    def __init__(self, identifier, ark, title, description, attribution):
 
         self.identifier = identifier
+        self.ark = ark
         self.title = title
         self.description = description
         self.attribution = attribution
 
-        self.directory = '/data/digital_collections/IIIF/IIIF_Files/rac/{}'.format(self.identifier.split('-')[1])
+        self.directory = '/data/digital_collections/ark_data'
+
+        noid = ark.split('/').pop()
+
+        with open('{}/{}/inventory.json'.format(
+            self.directory,
+            '/'.join([noid[c:c+2] for c in range(0, len(noid), 2)])
+        )) as f:
+            inventory = json.load(f)
+
+        images = set()
+        for item_paths in inventory['manifest'].values():
+            for item_path in item_paths:
+                m = re.search('^v[0-9]+/content/([0-9]{8})/file\.tif$', item_path)
+                try:
+                    images.add(m.group(1))
+                except AttributeError:
+                    continue
+        self.images = sorted(images)
+
+        self.sizes = []
+        for i in self.images:
+            with BytesIO(
+                requests.get('http://ark.lib.uchicago.edu/{}/{}/file.tif'.format(
+                    self.ark,
+                    i
+                )).content
+            ) as f:
+                self.sizes.append(Image.open(f).size)
 
     def _get_manifest_url(self):
        return 'https://iiif-manifest.lib.uchicago.edu/{}/{}/{}.json'.format(
@@ -41,24 +69,18 @@ class RacIIIFManifest:
        )
 
     def get_width(self, n):
-        tifs = []
-        for f in os.listdir('{}/tifs'.format(self.directory)):
-            tifs.append(f)
-        tifs.sort()
-        width, _ = Image.open('{}/tifs/{}'.format(self.directory, tifs[n])).size
-        return width
+        return self.sizes[n][0]
             
     def get_height(self, n):
-        tifs = []
-        for f in os.listdir('{}/tifs'.format(self.directory)):
-            tifs.append(f)
-        tifs.sort()
-        _, height = Image.open('{}/tifs/{}'.format(self.directory, tifs[n])).size
-        return height
+        return self.sizes[n][1]
 
     def get_imageserver_url(self, n):
-        path = 'rac/{0}/tifs/rac-{0}-{1}.tif'.format(self.identifier.split('-')[1], str(n+1).zfill(3))
-        return 'https://iiif-server.lib.uchicago.edu/{}'.format(urllib.parse.quote(path, safe=''))
+        return 'https://iiif-server.lib.uchicago.edu/{}'.format(
+            urllib.parse.quote(
+                '{}/{}'.format(self.ark, str(n+1).zfill(8)),
+                safe=''
+            )
+        )
 
     def data(self):
         manifest = {
@@ -92,7 +114,7 @@ class RacIIIFManifest:
             'viewingDirection': 'left-to-right'
         }
 
-        for e, entry in enumerate(os.listdir(self.directory + '/tifs/')):
+        for e in range(len(self.images)):
             manifest['sequences'][0]['canvases'].append({
                 '@id': 'https://{}'.format(str(uuid.uuid1())),
                 '@type': 'sc:Canvas',
@@ -151,20 +173,26 @@ class RacIIIFManifest:
 if __name__ == '__main__':
     arguments = docopt(__doc__)
 
-    titles = {
-        'rac-0392': 'Le Jeu des échecs moralisé, University of Chicago Library MS 392',
-        'rac-1380': 'Le Roman de la Rose, University of Chicago Library MS 1380'
-    }
-
     attributions = {
         'rac-0392': 'Le Jeu des échecs moralisé, University of Chicago Library MS 392, Special Collection Research Center, University of Chicago Library.',
         'rac-1380': 'Le Roman de la Rose, University of Chicago Library MS 1380, Special Collection Research Center, University of Chicago Library. Image courtesy of The Sheridan Libraries, Johns Hopkins University.'
+    }
+
+    arks = {
+        'rac-0392': 'ark:/61001/b2hd4d25q389',
+        'rac-1380': 'ark:/61001/b23w2sh1945f'
+    }
+
+    titles = {
+        'rac-0392': 'Le Jeu des échecs moralisé, University of Chicago Library MS 392',
+        'rac-1380': 'Le Roman de la Rose, University of Chicago Library MS 1380'
     }
 
     print(
         json.dumps(
             RacIIIFManifest(
                 arguments['<identifier>'],
+                arks[arguments['<identifier>']],
                 titles[arguments['<identifier>']],
                 'New Testament Manuscript Collection from the University of Chicago.',
                 attributions[arguments['<identifier>']]
