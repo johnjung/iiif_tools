@@ -1,0 +1,114 @@
+#!/usr/bin/env python
+
+"""Usage:
+   gms_build_manifest <identifier>
+"""
+
+from classes import IIIFManifest
+from classes import get_ark_from_original_identifier
+from classes import get_digital_objects_from_ark
+from docopt import docopt
+import json
+import re
+import requests
+import urllib.parse
+import uuid
+
+import xml.etree.ElementTree as ElementTree
+from io import BytesIO
+from PIL import Image
+Image.MAX_IMAGE_PIXELS = 2000000000
+
+
+class GmsIIIFManifest(IIIFManifest):
+    """Make a v3 manifest for one of the Goodspeed documents.
+       e.g. https://iiif-manifest.lib.uchicago.edu/gms/0019/gms-0019.json
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for object_number in get_digital_objects_from_ark(self.ark):
+            with BytesIO(
+                requests.get('http://ark.lib.uchicago.edu/{}/{}/file.tif'.format(
+                    self.ark,
+                    object_number
+                )).content
+            ) as f:
+                self.image_sizes.append(Image.open(f).size)
+
+    def _get_metadata(self):
+        # get the date.
+        with open('metadata/gms.xml') as f:
+            gms = ElementTree.fromstring(f.read())
+
+        # HACK because these manuscripts are listed as Ms. #### (OIM)
+        if identifier == 'gms-2057' or identifier == 'gms-9351':
+            ms_identifier_search = ms_identifier + ' (OIM)'
+        else:
+            ms_identifier_search = ms_identifier
+
+        for ms_item in gms.findall('msItem'):
+            if ms_item.find('manuscript').text == ms_identifier_search:
+                # HACK because these two manuscripts have multiple
+                # dates.
+                if identifier == 'gms-2057':
+                    date = '5th or 6th century'
+                elif identifier == 'gms-9351':
+                    date = '4th or 5th century'
+                else:
+                    date = ms_item.find('date_of_origin').text
+
+        return [
+            {
+                'label': { 'en': [ 'Title' ] },
+                'value': { 'en': [ self.title ] }
+            },
+            {
+                'label': { 'en': [ 'Identifier' ] },
+                'value': { 'en': [ self.identifier ] }
+            },
+            {
+                'label': { 'en': [ 'Date' ] },
+                'value': { 'en': [ date ] }
+            }
+        ]
+
+if __name__ == '__main__':
+    arguments = docopt(__doc__)
+    # e.g. "gms-0019"
+    identifier = arguments['<identifier>']
+    # e.g. "Ms. 19"
+    ms_identifier = 'Ms. {}'.format(identifier.split('-')[1].lstrip('0'))
+
+    # HACK because these manuscripts are listed as Ms. #### (OIM)
+    if identifier == 'gms-2057' or identifier == 'gms-9351':
+        ms_identifier_search = ms_identifier + ' (OIM)'
+    else:
+        ms_identifier_search = ms_identifier
+
+    title = None
+    with open('metadata/gms.xml') as f:
+        gms = ElementTree.fromstring(f.read())
+        for ms_item in gms.findall('msItem'):
+            if ms_item.find('manuscript').text == ms_identifier_search:
+                title = '{}: {} {}'.format(
+                    ms_identifier, 
+                    ms_item.find('catTitle/span[@class="manuscripttitle"]').text,
+                    ms_item.find('catTitle/span[@class="additionalinfo"]').text
+                )
+    assert title is not None
+
+    print(
+        json.dumps(
+            GmsIIIFManifest(
+                identifier,
+                get_ark_from_original_identifier(arguments['<identifier>']),
+                title,
+                'New Testament Manuscript Collection from the University of Chicago.',
+                'University of Chicago Library'
+            ).data(),
+            indent=4,
+            sort_keys=True
+        )
+    )
