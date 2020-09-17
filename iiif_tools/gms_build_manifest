@@ -5,15 +5,14 @@
 """
 
 from docopt import docopt
-import csv
 import json
-import os
 import re
-import sys
+import requests
 import urllib.parse
 import uuid
 
 import xml.etree.ElementTree as ElementTree
+from io import BytesIO
 from PIL import Image
 Image.MAX_IMAGE_PIXELS = 2000000000
 
@@ -23,15 +22,44 @@ class GmsIIIFManifest:
 
     """
 
-    def __init__(self, identifier, title, date, description, attribution):
+    def __init__(self, identifier, ark, title, date, description, attribution):
 
         self.identifier = identifier
+        self.ark = ark
         self.title = title
         self.date = date
         self.description = description
         self.attribution = attribution
 
-        self.directory = '/data/digital_collections/IIIF/IIIF_Files/gms/{}'.format(self.identifier)
+        self.directory = '/data/digital_collections/ark_data'
+
+        noid = ark.split('/').pop()
+
+        with open('{}/{}/inventory.json'.format(
+            self.directory,
+            '/'.join([noid[c:c+2] for c in range(0, len(noid), 2)])
+        )) as f:
+            inventory = json.load(f)
+
+        images = set()
+        for item_paths in inventory['manifest'].values():
+            for item_path in item_paths:
+                m = re.search('^v[0-9]+/content/([0-9]{8})/file\.tif$', item_path)
+                try:
+                    images.add(m.group(1))
+                except AttributeError:
+                    continue
+        self.images = sorted(images)
+
+        self.sizes = []
+        for i in self.images:
+            with BytesIO(
+                requests.get('http://ark.lib.uchicago.edu/{}/{}/file.tif'.format(
+                    self.ark,
+                    i
+                )).content
+            ) as f:
+                self.sizes.append(Image.open(f).size)
 
     def _get_manifest_url(self):
        return 'https://iiif-manifest.lib.uchicago.edu/{}/{}/{}.json'.format(
@@ -41,24 +69,18 @@ class GmsIIIFManifest:
        )
 
     def get_width(self, n):
-        tifs = []
-        for f in os.listdir('{}/tifs'.format(self.directory)):
-            tifs.append(f)
-        tifs.sort()
-        width, _ = Image.open('{}/tifs/{}'.format(self.directory, tifs[n])).size
-        return width
+        return self.sizes[n][0]
             
     def get_height(self, n):
-        tifs = []
-        for f in os.listdir('{}/tifs'.format(self.directory)):
-            tifs.append(f)
-        tifs.sort()
-        _, height = Image.open('{}/tifs/{}'.format(self.directory, tifs[n])).size
-        return height
+        return self.sizes[n][1]
 
     def get_imageserver_url(self, n):
-        path = 'gms/{0}/tifs/{0}-{1}.tif'.format(self.identifier, str(n+1).zfill(3))
-        return 'https://iiif-server.lib.uchicago.edu/{}'.format(urllib.parse.quote(path, safe=''))
+        return 'https://iiif-server.lib.uchicago.edu/{}'.format(
+            urllib.parse.quote(
+                '{}/{}'.format(self.ark, str(n+1).zfill(8)),
+                safe=''
+            )
+        )
 
     def data(self):
         manifest = {
@@ -95,7 +117,7 @@ class GmsIIIFManifest:
             'viewingDirection': 'left-to-right'
         }
 
-        for e, entry in enumerate(os.listdir(self.directory + '/tifs/')):
+        for e in range(len(self.images)):
             manifest['sequences'][0]['canvases'].append({
                 '@id': 'https://{}'.format(str(uuid.uuid1())),
                 '@type': 'sc:Canvas',
@@ -187,6 +209,78 @@ if __name__ == '__main__':
     assert date is not None
     assert title is not None
 
+    arks = {
+        'gms-0019': 'ark:/61001/b22r97w8w16w',
+        'gms-0046': 'ark:/61001/b2r49613m739',
+        'gms-0050': 'ark:/61001/b2252c21c40j',
+        'gms-0062': 'ark:/61001/b21h2qs1kq93',
+        'gms-0125': 'ark:/61001/b27k6f76xv2c',
+        'gms-0126': 'ark:/61001/b2zw1sk10z2p',
+        'gms-0128': 'ark:/61001/b2v66c772m2d',
+        'gms-0129': 'ark:/61001/b2hg4dv0t19c',
+        'gms-0130': 'ark:/61001/b2jm34q08d92',
+        'gms-0131': 'ark:/61001/b20b66b16m99',
+        'gms-0132': 'ark:/61001/b25p7648f449',
+        'gms-0133': 'ark:/61001/b2xt9r51m29v',
+        'gms-0134': 'ark:/61001/b21653s2b686',
+        'gms-0135': 'ark:/61001/b2rx8tc4c382',
+        'gms-0136': 'ark:/61001/b28g36601485',
+        'gms-0137': 'ark:/61001/b2tf8607b640',
+        'gms-0138': 'ark:/61001/b2kc4bv6dq7t',
+        'gms-0139': 'ark:/61001/b2j22s88pv5c',
+        'gms-0140': 'ark:/61001/b2rr3474jq6d',
+        'gms-0141': 'ark:/61001/b2q863x32r5v',
+        'gms-0142': 'ark:/61001/b21n41w4z039',
+        'gms-0166': 'ark:/61001/b2w68f28t31m',
+        'gms-0202': 'ark:/61001/b24n8sx0v58p',
+        'gms-0229': 'ark:/61001/b2hd51r0ds60',
+        'gms-0232': 'ark:/61001/b2x05jb9ms30',
+        'gms-0234': 'ark:/61001/b23668t4z968',
+        'gms-0251': 'ark:/61001/b2xm88p9hm7m',
+        'gms-0270': 'ark:/61001/b2619jx9x498',
+        'gms-0275': 'ark:/61001/b2f890560z5w',
+        'gms-0277': 'ark:/61001/b2v41cd8r53v',
+        'gms-0338': 'ark:/61001/b2qc0fc02r13',
+        'gms-0342': 'ark:/61001/b2hv6vj5b32t',
+        'gms-0378': 'ark:/61001/b2s81tv2344h',
+        'gms-0702': 'ark:/61001/b2db1qf0q581',
+        'gms-0715': 'ark:/61001/b22g06x7hj0g',
+        'gms-0716': 'ark:/61001/b26z1nt4b473',
+        'gms-0727': 'ark:/61001/b27918964p3c',
+        'gms-0773': 'ark:/61001/b2pd0579k97f',
+        'gms-0781': 'ark:/61001/b2cz19g5k38m',
+        'gms-0823': 'ark:/61001/b2cm6k73k70v',
+        'gms-0828': 'ark:/61001/b2cw3797p05c',
+        'gms-0829': 'ark:/61001/b2vg2mb1n33t',
+        'gms-0862': 'ark:/61001/b22w1jb97919',
+        'gms-0879': 'ark:/61001/b21p0qs8d87k',
+        'gms-0899': 'ark:/61001/b2tq83r8fn4g',
+        'gms-0902': 'ark:/61001/b2dw8vx36d1k',
+        'gms-0922': 'ark:/61001/b2mx17c0p66w',
+        'gms-0931': 'ark:/61001/b2m029n2bp5k',
+        'gms-0937': 'ark:/61001/b2ct6dp7rr2c',
+        'gms-0938': 'ark:/61001/b2x09589fj7g',
+        'gms-0939': 'ark:/61001/b2xg70z1x19k',
+        'gms-0943': 'ark:/61001/b2ng6835gv04',
+        'gms-0947': 'ark:/61001/b2v389m6pq39',
+        'gms-0948': 'ark:/61001/b29b1tv7xn7g',
+        'gms-0949': 'ark:/61001/b2df0vt15q42',
+        'gms-0951': 'ark:/61001/b2356md6v076',
+        'gms-0953': 'ark:/61001/b2mt6k84q349',
+        'gms-0965': 'ark:/61001/b27p6dn4xz06',
+        'gms-0972': 'ark:/61001/b2p35sm3m748',
+        'gms-0995': 'ark:/61001/b2c28xt9t89r',
+        'gms-0996': 'ark:/61001/b2r71z62cp81',
+        'gms-1017': 'ark:/61001/b2n921x8508j',
+        'gms-1040': 'ark:/61001/b2vp2vt5xm84',
+        'gms-1054': 'ark:/61001/b28c3rs3cn88',
+        'gms-1341': 'ark:/61001/b24h5461cb1m',
+        'gms-1342': 'ark:/61001/b27f7vt1wm3v',
+        'gms-2057': 'ark:/61001/b2rh24g80h5n',
+        'gms-9351': 'ark:/61001/b25p3r42st0r'
+    }
+
+
     # turn identifier (e.g. gms-0019) into Ms number: e.g. "Ms. 19"
     # find the //msItem where manuscript equals that. 
     # get span class='manuscripttitle'
@@ -196,6 +290,7 @@ if __name__ == '__main__':
         json.dumps(
             GmsIIIFManifest(
                 identifier,
+                arks[identifier],
                 title,
                 date,
                 'New Testament Manuscript Collection from the University of Chicago.',
