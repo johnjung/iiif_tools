@@ -1,0 +1,324 @@
+#!/usr/bin/env python
+
+"""Usage:
+   soc_sci_maps_build_collection (--list-by-publication-date | --subject-overview | --subject=<subject>)
+
+This command gets MARCXML from the social scientist maps IIIF_Files
+directories and builds an IIIF Collection json document.
+"""
+
+import json, os, requests, sqlite3, sys
+import urllib.parse
+import xml.etree.ElementTree as ET
+from docopt import docopt
+
+def get_size_for_socsci_identifier(s):
+    return {
+        'G4104-C6-1933-U5-g': (3365, 4399), 
+        'G4104-C6E625-1930-U5': (6985, 9521),
+        'G4104-C6-2N6-1920z-U5': (11287, 6775),
+        'G4104-C6-1933-U5-b': (3365, 4399),
+        'G4104-C6-1933-U5-k': (3365, 4399),
+        'G4104-C6E625-1927-S5': (3527, 6319),
+        'G4104-C6E625-1920-S5': (3527, 6359),
+        'G4104-C6-2N15-1920z-U5': (11883, 7124),
+        'G4104-C6-2W9-1920z-U5': (10159, 7385),
+        'G4104-C6-2M2-1924-U5': (9328, 7234),
+        'G4104-C6P3-1943-M21': (4379, 6780),
+        'G4104-C6P3-1943-M2': (4379, 6780),
+        'G4104-C6-1933-U5-i': (3365, 4399),
+        'G4104-C6E1-1940-U55': (8793, 13399),
+        'G4104-C6E625-1926-T5': (7419, 10749),
+        'G4104-C6-1933-U5-c': (3365, 4399),
+        'G4104-C6-2E6-1924-U5': (10106, 11804),
+        'G4104-C6-2L3-1925-U5': (11427, 12021),
+        'G4104-C6-2N3-1927-U5': (14480, 8439),
+        'G4104-C6-2E15-1924-U5': (8972, 8032),
+        'G4104-C6-1933-U5-o': (3365, 4399),
+        'G4104-C6-2L9-1920z-U5': (10825, 6919),
+        'G4104-C6E625-1930-R4': (1824, 2694),
+        'G4104-C6-2H9-1920z-U5': (7639, 7297),
+        'G4104-C6-1933-U5-l': (3365, 4399),
+        'G4104-C6E625-1910-R4': (1834, 2734),
+        'G4104-C6-1933-U5-e': (3365, 4399),
+        'G4104-C6-1933-U5-f': (3365, 4399),
+        'G4104-C6P3-1940z-P7': (4379, 6780),
+        'G4104-C6E1-1926-C5': (7308, 10797),
+        'G4104-C6-2W9Q4-1930z-U5': (6205, 44700),
+        'G4104-C6-2H9E11-1956-T3': (12104, 16524),
+        'G4104-C6-1933-U5-a': (3385, 4409),
+        'G4104-C6-1933-U5-h': (3365, 4399),
+        'G4104-C6-2N3E51-1908-S2': (8290, 5107),
+        'G4104-C6-1933-U5-p': (3365, 4399),
+        'G4104-C6-2B7-1923-U5': (6462, 8936),
+        'G4104-C6-2B8-1923-U5': (7128, 9769),
+        'G4104-C6P3-1940-M3': (6780, 8782),
+        'G4104-C6-1933-U5-d': (3365, 4399),
+        'G4104-C6-2W8-1925-U5': (13581, 9546),
+        'G4104-C6-1933-U5-n': (3365, 4399),
+        'G4104-C6-1933-U5-j': (3365, 4399),
+        'G4104-C6-1933-U5-m': (3365, 4399),
+        'G4104-C6E625-1933-N2': (3387, 4396)
+    }[s]
+
+def get_ark_for_socsci_identifier(s):
+    return {
+        'G4104-C6-1933-U5-g': 'ark:/61001/b2kg6jc3941j',
+        'G4104-C6E625-1930-U5': 'ark:/61001/b2st63w23x7j',
+        'G4104-C6-2N6-1920z-U5': 'ark:/61001/b2s05v615c5v',
+        'G4104-C6-1933-U5-b': 'ark:/61001/b2h505p2k84p',
+        'G4104-C6-1933-U5-k': 'ark:/61001/b2k04f36mh8s',
+        'G4104-C6E625-1927-S5': 'ark:/61001/b2w23nh6678g',
+        'G4104-C6E625-1920-S5': 'ark:/61001/b2w27c162t47',
+        'G4104-C6-2N15-1920z-U5': 'ark:/61001/b2rd94h3tn54',
+        'G4104-C6-2W9-1920z-U5': 'ark:/61001/b2w80rn9bb9v',
+        'G4104-C6-2M2-1924-U5': 'ark:/61001/b2qr3b65cv85',
+        'G4104-C6P3-1943-M21': 'ark:/61001/b2mp4j580m13',
+        'G4104-C6P3-1943-M2': 'ark:/61001/b2mz7z92wv8n',
+        'G4104-C6-1933-U5-i': 'ark:/61001/b2hb1dc9ft8j',
+        'G4104-C6E1-1940-U55': 'ark:/61001/b2n28w299w1k',
+        'G4104-C6E625-1926-T5': 'ark:/61001/b2tp7h191k7k',
+        'G4104-C6-1933-U5-c': 'ark:/61001/b2hr8g07j491',
+        'G4104-C6-2E6-1924-U5': 'ark:/61001/b2q84g22958x',
+        'G4104-C6-2L3-1925-U5': 'ark:/61001/b2sc7207dq18',
+        'G4104-C6-2N3-1927-U5': 'ark:/61001/b2qv8nq0bz3c',
+        'G4104-C6-2E15-1924-U5': 'ark:/61001/b2rg9v099q4f',
+        'G4104-C6-1933-U5-o': 'ark:/61001/b2mm3nk1mj7d',
+        'G4104-C6-2L9-1920z-U5': 'ark:/61001/b2q573m8n49d',
+        'G4104-C6E625-1930-R4': 'ark:/61001/b2v29bx9gj8v',
+        'G4104-C6-2H9-1920z-U5': 'ark:/61001/b2pn1qx6zj2t',
+        'G4104-C6-1933-U5-l': 'ark:/61001/b2k172z1q79c',
+        'G4104-C6E625-1910-R4': 'ark:/61001/b2vm2sg8j85v',
+        'G4104-C6-1933-U5-e': 'ark:/61001/b2kr7zh82s5j',
+        'G4104-C6-1933-U5-f': 'ark:/61001/b2kx1qx1n50w',
+        'G4104-C6P3-1940z-P7': 'ark:/61001/b2tf4wj2mp94',
+        'G4104-C6E1-1926-C5': 'ark:/61001/b2q41s96rb7w',
+        'G4104-C6-2W9Q4-1930z-U5': 'ark:/61001/b2nz6kd3rj2p',
+        'G4104-C6-2H9E11-1956-T3': 'ark:/61001/b2nn6x21dq59',
+        'G4104-C6-1933-U5-a': 'ark:/61001/b2gg00s0zd88',
+        'G4104-C6-1933-U5-h': 'ark:/61001/b2gg6296r847',
+        'G4104-C6-2N3E51-1908-S2': 'ark:/61001/b2nd42r7xp0q',
+        'G4104-C6-1933-U5-p': 'ark:/61001/b2k86bv2x025',
+        'G4104-C6-2B7-1923-U5': 'ark:/61001/b2qn59n7fr6d',
+        'G4104-C6-2B8-1923-U5': 'ark:/61001/b2qd0bb4kk01',
+        'G4104-C6P3-1940-M3': 'ark:/61001/b2mx21f2x54x',
+        'G4104-C6-1933-U5-d': 'ark:/61001/b2jk7b25458m',
+        'G4104-C6-2W8-1925-U5': 'ark:/61001/b2qz5pj08k60',
+        'G4104-C6-1933-U5-n': 'ark:/61001/b2mk7qv7h276',
+        'G4104-C6-1933-U5-j': 'ark:/61001/b2jf2bv76x74',
+        'G4104-C6-1933-U5-m': 'ark:/61001/b2k57z87tt0h',
+        'G4104-C6E625-1933-N2': 'ark:/61001/b2nw3wm8552h'
+    }[s]
+
+def collection_skeleton(at_id, description, viewinghint):
+    return {
+        '@context': [ 
+            'http://iiif.io/api/presentation/3/context.json' 
+        ],
+        'id': at_id,
+        'type': 'Collection',
+        'label': {
+            'en': [
+                'Maps Digital Collections'
+            ]
+        },
+        'description': {
+            'en': [
+                'description'
+            ]
+        },
+        'behavior': [ viewinghint ],
+        'items': []
+    }
+
+def socsci_identifiers():
+    # because dates appear in multiple formats which don't lend
+    # themselves to sorting, this list has been manually sorted
+    return (
+        'G4104-C6-2N3E51-1908-S2',
+        'G4104-C6-2L9-1920z-U5',
+        'G4104-C6-2N15-1920z-U5',
+        'G4104-C6-2H9-1920z-U5',
+        'G4104-C6-2N6-1920z-U5',
+        'G4104-C6-2W9-1920z-U5',
+        'G4104-C6-2B7-1923-U5',
+        'G4104-C6-2B8-1923-U5',
+        'G4104-C6-2E15-1924-U5',
+        'G4104-C6-2E6-1924-U5',
+        'G4104-C6-2M2-1924-U5',
+        'G4104-C6-2L3-1925-U5',
+        'G4104-C6-2W8-1925-U5',
+        'G4104-C6E1-1926-C5',
+        'G4104-C6-2N3-1927-U5',
+        'G4104-C6E625-1920-S5',
+        'G4104-C6E625-1927-S5',
+        'G4104-C6E625-1930-U5',
+        'G4104-C6-2W9Q4-1930z-U5',
+        'G4104-C6-1933-U5-a',
+        'G4104-C6-1933-U5-b',
+        'G4104-C6-1933-U5-c',
+        'G4104-C6-1933-U5-d',
+        'G4104-C6-1933-U5-g',
+        'G4104-C6-1933-U5-h',
+        'G4104-C6-1933-U5-i',
+        'G4104-C6-1933-U5-j',
+        'G4104-C6-1933-U5-k',
+        'G4104-C6-1933-U5-l',
+        'G4104-C6-1933-U5-m',
+        'G4104-C6-1933-U5-e',
+        'G4104-C6-1933-U5-f',
+        'G4104-C6-1933-U5-n',
+        'G4104-C6-1933-U5-o',
+        'G4104-C6E625-1910-R4',
+        'G4104-C6E625-1930-R4',
+        'G4104-C6E625-1933-N2',
+        'G4104-C6-1933-U5-p',
+        'G4104-C6E625-1926-T5',
+        'G4104-C6E1-1940-U55',
+        'G4104-C6P3-1940-M3',
+        'G4104-C6P3-1940z-P7',
+        'G4104-C6P3-1943-M2',
+        'G4104-C6P3-1943-M21',
+        'G4104-C6-2H9E11-1956-T3',
+    )
+
+def get_dc_for_identifier(i):
+    conn = sqlite3.connect('/data/s4/jej/ark_data.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM arks WHERE original_identifier=?", (i,))
+    result = c.fetchone()
+
+    url = 'https://ark.lib.uchicago.edu/{}/file.dc.xml'.format(result[1])
+
+    return ET.fromstring(requests.get(url).text)
+
+def list_by_publication_date():
+    collection = collection_skeleton(
+        'https://iiif-collection.lib.uchicago.edu/maps/chisoc/chisoc.json',
+        'Social Scientists Maps collection from the University of Chicago Library',
+        'individuals'
+    )
+
+    for i in socsci_identifiers():
+        dc = get_dc_for_identifier(i)
+
+        size = get_size_for_socsci_identifier(i)
+        if size[0] > size[1]:
+            thumbnail_size = (500, int(500.0 / size[0] * size[1]))
+        else:
+            thumbnail_size = (int(500.0 / size[1] * size[0]), 500)
+
+        collection['items'].append({
+            'type': 'Manifest',
+            'id': 'https://iiif-manifest.lib.uchicago.edu/maps/chisoc/{0}/{0}.json'.format(i),
+            'behavior': [ 'multi-part' ],
+            'label': { 
+                'en': [ 
+                    dc.find('{http://purl.org/dc/elements/1.1/}title').text 
+                ] 
+            },
+            'metadata': [
+                {
+                    'label': { 
+                        'en': [ 
+                            'Date' 
+                        ] 
+                    },
+                    'value': { 
+                        'en': [ 
+                            dc.find('{http://purl.org/dc/terms/}issued').text
+                        ] 
+                    },
+                }
+            ],
+            'thumbnail': [
+                {
+                    'id': 'https://iiif-server-dev.lib.uchicago.edu/{}/full/{},{}/0/default.jpg'.format(
+                        urllib.parse.quote(get_ark_for_socsci_identifier(i), safe=''),
+                        thumbnail_size[0],
+                        thumbnail_size[1]
+                    ),
+                    'type': 'Image',
+                    'format': 'image/jpeg',
+                    'width': thumbnail_size[0],
+                    'height': thumbnail_size[1]
+                }
+            ],
+        })
+    return json.dumps(collection)
+
+def list_subjects():
+    collection = collection_skeleton(
+        'https://iiif-collection.lib.uchicago.edu/maps/chisoc/chisoc-subjects.json',
+        'Social Scientists Maps collection subjects',
+        'multi-part'
+    )
+    subjects = set()
+    for i in socsci_identifiers():
+        dc = get_dc_for_identifier(i)
+        for s in dc.findall('{http://purl.org/dc/elements/1.1/}subject'):
+            subjects.add(s.text)
+
+    for s in sorted(list(subjects)):
+        collection['items'].append({
+            'type': 'Collection',
+            'id':
+            'https://iiif-collection.lib.uchicago.edu/maps/chisoc/chisoc-subjects-{}.json'.format(s.lower().replace(' ', '-')),
+            'behavior': [ 'multi-part' ],
+            'label': { 'en': [ s ] }
+        })
+    return json.dumps(collection)
+
+def subject(s):
+    subject_slug = s.lower().replace(' ', '-')
+    collection = collection_skeleton(
+        'https://iiif-collection.lib.uchicago.edu/maps/chisoc/chisoc-subjects-{}.json'.format(subject_slug),
+        'Social Scientists Maps collection maps with the subject: {}'.format(s),
+        'individuals'
+    )
+
+    for i in socsci_identifiers():
+        dc = get_dc_for_identifier(i)
+        subject_slugs = [s.text.lower().replace(' ', '-') for s in dc.findall('{http://purl.org/dc/elements/1.1/}subject')]
+
+        size = get_size_for_socsci_identifier(i)
+        if size[0] > size[1]:
+            thumbnail_size = (500, int(500.0 / size[0] * size[1]))
+        else:
+            thumbnail_size = (int(500.0 / size[1] * size[0]), 500)
+
+        if subject_slug in subject_slugs:
+            collection['items'].append({
+                'type': 'Manifest',
+                'id': 'https://iiif-manifest.lib.uchicago.edu/maps/chisoc/{0}/{0}.json'.format(i),
+                'behavior': [ 'multi-part' ],
+                'label': { 'en': [ dc.find('{http://purl.org/dc/elements/1.1/}title').text ] },
+                'thumbnail': [
+                    {
+                        'id': 'https://iiif-server-dev.lib.uchicago.edu/{}/full/{},{}/0/default.jpg'.format(
+                            urllib.parse.quote(get_ark_for_socsci_identifier(i), safe=''),
+                            thumbnail_size[0],
+                            thumbnail_size[1]
+                        ),
+                        'type': 'Image',
+                        'format': 'image/jpeg',
+                        'width': thumbnail_size[0],
+                        'height': thumbnail_size[1]
+                    }
+                ],
+            })
+
+    return json.dumps(collection)
+
+def main():
+    options = docopt(__doc__)
+
+    if options['--list-by-publication-date']:
+        sys.stdout.write(list_by_publication_date())
+    elif options['--subject-overview']:
+        sys.stdout.write(list_subjects())
+    elif options['--subject']:
+        sys.stdout.write(subject(options['--subject']))
+
+if __name__ == '__main__':
+    main()
