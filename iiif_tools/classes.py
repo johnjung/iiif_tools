@@ -8,7 +8,6 @@ import uuid
 
 from io import BytesIO
 from metadata_converters.classes import SocSciMapsMarcXmlToDc
-from pyiiif.pres_api.twodotone.records import Annotation, Canvas, ImageResource, Manifest, MetadataField, Sequence
 
 from PIL import Image
 Image.MAX_IMAGE_PIXELS = 1000000000
@@ -87,27 +86,21 @@ class IIIFManifest:
              }
          ]
 
-    def _get_thumbnail(self, max_size):
-        thumbnail_size = [round(1.0 * max_size / max(self.image_sizes[0] * d))
-                          for d in self.image_sizes[0]]
+    def _get_thumbnail(self, n, width):
         return [
             {
-                'format': 'image/jpeg',
-                'height': thumbnail_size[1],
-                'id': '{}/full/{},{}/0/default.jpg'.format(
-                    self._get_imageserver_url(0),
-                    thumbnail_size[0],
-                    thumbnail_size[1]
+                'id': '{}/full/{},/0/default.jpg'.format(
+                    self._get_imageserver_url(n),
+                    width
                 ),
                 'service': [
                     {
-                        '@id': self._get_imageserver_url(0),
+                        '@id': self._get_imageserver_url(n),
                         '@type': 'ImageService2',
                         'profile': 'http://iiif.io/api/image/2/level2.json'
                     }
                 ],
-                'type': 'Image',
-                'width': thumbnail_size[0]
+                'type': 'Image'
             }
         ]
 
@@ -118,14 +111,15 @@ class IIIFManifest:
             canvases.append({
                 'height': self._get_height(n),
                 'id': canvas_id,
-                'items': [ self._get_annotation_page(canvas_id) ],
+                'items': [ self._get_annotation_page(n, canvas_id) ],
                 'label': { 'en': [ 'Image {:03d}'.format(n+1) ] },
+                'thumbnail': self._get_thumbnail(n, 200),
                 'type': 'Canvas',
                 'width': self._get_width(n)
             })
         return canvases
 
-    def _get_annotation_page(self, canvas_id):
+    def _get_annotation_page(self, n, canvas_id):
         annotation_id = 'https://{}'.format(str(uuid.uuid4()))
         return {
             'id': annotation_id,
@@ -142,7 +136,7 @@ class IIIFManifest:
                         'id': 'https://{}'.format(str(uuid.uuid4())),
                         'service': [
                             {
-                                '@id': self._get_imageserver_url(0),
+                                '@id': self._get_imageserver_url(n),
                                 '@type': 'ImageService2',
                                 'profile': 'http://iiif.io/api/image/2/level2.json'
                             }
@@ -155,11 +149,16 @@ class IIIFManifest:
         }
 
     def data(self):
+        if len(self.image_sizes) > 1:
+            behavior = 'paged'
+        else:
+            behavior = 'non-paged'
         manifest = {
             '@context': [
                 'http://iiif.io/api/presentation/3/context.json',
                 'http://iiif.io/api/image/2/context.json'
             ],
+            'behavior': [ behavior ],
             'id': self._get_manifest_url(),
             'items': self._get_canvases(),
             'type': 'Manifest',
@@ -176,8 +175,10 @@ class IIIFManifest:
                     self.summary
                 ]
             },
-            'thumbnail': self._get_thumbnail(500)
+            'thumbnail': self._get_thumbnail(0, 500)
         }
+        if len(self.image_sizes) > 1:
+            manifest['viewingDirection'] = 'left-to-right'
         return manifest
 
     def _get_width(self, n):

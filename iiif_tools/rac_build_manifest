@@ -6,181 +6,68 @@
 
 from docopt import docopt
 import json
-import re
 import requests
-import sys
-import urllib.parse
-import uuid
 
 from io import BytesIO
 from PIL import Image
 Image.MAX_IMAGE_PIXELS = 2000000000
 
-class RacIIIFManifest:
-    """Make a manifest for one of the rose and chess documents. 
-       e.g. https://iiif-manifest.lib.uchicago.edu/rac/0392/rac-0392.json
-       e.g. https://iiif-manifest.lib.uchicago.edu/rac/1380/rac-1380.json
+from classes import IIIFManifest
+from classes import get_digital_objects_from_ark
 
+
+class RacIIIFManifest(IIIFManifest):
+    """Make a v3 manifest for one of the rose and chess documents.
+       e.g. https://iiif-manifest.lib.uchicago.edu/rac/0392/rac-0392.json
     """
 
-    def __init__(self, identifier, ark, title, description, attribution):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-        self.identifier = identifier
-        self.ark = ark
-        self.title = title
-        self.description = description
-        self.attribution = attribution
-
-        self.directory = '/data/digital_collections/ark_data'
-
-        noid = ark.split('/').pop()
-
-        with open('{}/{}/inventory.json'.format(
-            self.directory,
-            '/'.join([noid[c:c+2] for c in range(0, len(noid), 2)])
-        )) as f:
-            inventory = json.load(f)
-
-        images = set()
-        for item_paths in inventory['manifest'].values():
-            for item_path in item_paths:
-                m = re.search('^v[0-9]+/content/([0-9]{8})/file\.tif$', item_path)
-                try:
-                    images.add(m.group(1))
-                except AttributeError:
-                    continue
-        self.images = sorted(images)
-
-        self.sizes = []
-        for i in self.images:
+        for object_number in get_digital_objects_from_ark(self.ark):
             with BytesIO(
                 requests.get('http://ark.lib.uchicago.edu/{}/{}/file.tif'.format(
                     self.ark,
-                    i
+                    object_number
                 )).content
             ) as f:
-                self.sizes.append(Image.open(f).size)
+                self.image_sizes.append(Image.open(f).size)
 
-    def _get_manifest_url(self):
-       return 'https://iiif-manifest.lib.uchicago.edu/{}/{}/{}.json'.format(
-           self.identifier.split('-')[0],
-           self.identifier.split('-')[1],
-           self.identifier
-       )
-
-    def get_width(self, n):
-        return self.sizes[n][0]
-            
-    def get_height(self, n):
-        return self.sizes[n][1]
-
-    def get_imageserver_url(self, n):
-        return 'https://iiif-server.lib.uchicago.edu/{}'.format(
-            urllib.parse.quote(
-                '{}/{}'.format(self.ark, str(n+1).zfill(8)),
-                safe=''
-            )
-        )
-
-    def data(self):
-        manifest = {
-            '@context': 'http://iiif.io/api/presentation/2/context.json',
-            '@id': self._get_manifest_url(),
-            '@type': 'sc:Manifest',
-            'metadata': [
-                {
-                    'label': 'Title',
-                    'value': self.title
-                },
-                {
-                    'label': 'Identifier',
-                    'value': self.identifier
-                }
-            ],
-            'description': self.description,
-            'logo': 'https://www.lib.uchicago.edu/static/base/images/color-logo.png',
-            'license': 'http://campub.lib.uchicago.edu/rights/',
-            'attribution': self.attribution,
-            'label': self.title,
-            'sequences': [
-                {
-                    '@id': 'https://{}'.format(str(uuid.uuid1())),
-                    '@type': 'sc:Sequence',
-                    'canvases': [],
-                    'viewingHint': 'paged'
-                }
-            ],
-            'structures': [],
-            'viewingDirection': 'left-to-right'
-        }
-
-        for e in range(len(self.images)):
-            manifest['sequences'][0]['canvases'].append({
-                '@id': 'https://{}'.format(str(uuid.uuid1())),
-                '@type': 'sc:Canvas',
-                'label': 'Image {:03d}'.format(e + 1),
-                'height': self.get_height(e),
-                'width': self.get_width(e),
-                'images': [
-                    {
-                        '@context': 'http://iiif.io/api/presentation/2/context.json',
-                        '@id': 'https://{}'.format(uuid.uuid1()),
-                        '@type': 'oa:Annotation',
-                        'motivation': 'sc:Painting',
-                        'resource': {
-                         '@id': 'https://{}'.format(uuid.uuid1()),
-                         '@type': 'dctypes:Image',
-                         'format': 'image/jpeg',
-                         'height': self.get_height(e),
-                         'width': self.get_width(e),
-                         'service': {
-                             '@context': 'http://iiif.io/api/image/2/context.json',
-                             '@id': self.get_imageserver_url(e),
-                             'profile': [
-                                 'http://iiif.io/api/image/2/level2.json',
-                                 {
-                                     'supports': [
-                                         'canonicalLinkHeader',
-                                         'profileLinkHeader',
-                                         'mirroring',
-                                         'rotationArbitrary',
-                                         'regionSquare',
-                                         'sizeAboveFull'
-                                     ],
-                                     'qualities': [
-                                         'default',
-                                         'gray',
-                                         'bitonal'
-                                     ],
-                                     'format': [
-                                         'jpg',
-                                         'png',
-                                         'gif',
-                                         'webp'
-                                     ]
-                                 }
-                             ]
-                         }
-                        },
-                        'on': 'https://{}'.format(uuid.uuid1())
-                    }
-                ]
-            })
-
-        return manifest
-
+    def _get_metadata(self):
+        return [
+            {
+                'label': { 'en': [ 'Title' ] },
+                'value': { 'en': [ self.title ] }
+            },
+            {
+                'label': { 'en': [ 'Identifier' ] },
+                'value': { 'en': [ self.identifier ] }
+            },
+            {
+                'label': { 'en': [ 'Description' ] },
+                'value': { 'en': [ self.summary ] }
+            },
+            {
+                'label': { 'en': [ 'Attribution' ] },
+                'value': { 'en': [ self.required_statement ] }
+            },
+            {
+                'label': { 'en': [ 'Lincense' ] },
+                'value': { 'en': [ '<a href="http://campub.lib.uchicago.edu/rights/">http://campub.lib.uchicago.edu/rights/</a>' ] }
+            }
+        ]
 
 if __name__ == '__main__':
     arguments = docopt(__doc__)
 
-    attributions = {
-        'rac-0392': 'Le Jeu des échecs moralisé, University of Chicago Library MS 392, Special Collection Research Center, University of Chicago Library.',
-        'rac-1380': 'Le Roman de la Rose, University of Chicago Library MS 1380, Special Collection Research Center, University of Chicago Library. Image courtesy of The Sheridan Libraries, Johns Hopkins University.'
-    }
-
     arks = {
         'rac-0392': 'ark:/61001/b2hd4d25q389',
         'rac-1380': 'ark:/61001/b23w2sh1945f'
+    }
+
+    attributions = {
+        'rac-0392': 'Le Jeu des échecs moralisé, University of Chicago Library MS 392, Special Collection Research Center, University of Chicago Library.',
+        'rac-1380': 'Le Roman de la Rose, University of Chicago Library MS 1380, Special Collection Research Center, University of Chicago Library. Image courtesy of The Sheridan Libraries, Johns Hopkins University.'
     }
 
     titles = {
@@ -194,7 +81,7 @@ if __name__ == '__main__':
                 arguments['<identifier>'],
                 arks[arguments['<identifier>']],
                 titles[arguments['<identifier>']],
-                'New Testament Manuscript Collection from the University of Chicago.',
+                'Manuscript Collection from the University of Chicago.',
                 attributions[arguments['<identifier>']]
             ).data(),
             indent=4,
