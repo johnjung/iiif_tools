@@ -61,8 +61,8 @@ if __name__ == '__main__':
     arguments = docopt(__doc__)
 
     arks = {
-        'rac-0392': 'ark:/61001/b2hd4d25q389',
-        'rac-1380': 'ark:/61001/b23w2sh1945f'
+        'rac-0392': 'ark:61001/b2hd4d25q389',
+        'rac-1380': 'ark:61001/b23w2sh1945f'
     }
 
     attributions = {
