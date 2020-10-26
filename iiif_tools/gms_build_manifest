@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 """Usage:
-   gms_build_manifest <identifier>
+   gms_build_manifest <ark>
 """
 
 from classes import IIIFManifest
-from classes import get_ark_from_original_identifier
+from classes import get_ark_from_original_identifier, get_original_identifier_from_ark
 from classes import get_digital_objects_from_ark
 from docopt import docopt
 import json
@@ -81,6 +81,10 @@ class GmsIIIFManifest(IIIFManifest):
                 'value': { 'en': [ self.required_statement ] }
             },
             {
+                'label': { 'en': [ 'ARK Identifier' ] },
+                'value': { 'en': [ self.ark ] }
+            },
+            {
                 'label': { 'en': [ 'License' ] },
                 'value': { 'en': [ '<a href="https://creativecommons.org/licenses/by-nc/4.0/">https://creativecommons.org/licenses/by-nc/4.0/</a>' ] }
             }
@@ -88,8 +92,9 @@ class GmsIIIFManifest(IIIFManifest):
 
 if __name__ == '__main__':
     arguments = docopt(__doc__)
+
     # e.g. "gms-0019"
-    identifier = arguments['<identifier>']
+    identifier = get_original_identifier_from_ark(arguments['<ark>'])
     # e.g. "Ms. 19"
     ms_identifier = 'Ms. {}'.format(identifier.split('-')[1].lstrip('0'))
 
@@ -115,7 +120,7 @@ if __name__ == '__main__':
         json.dumps(
             GmsIIIFManifest(
                 identifier,
-                get_ark_from_original_identifier(arguments['<identifier>']),
+                arguments['<ark>'],
                 title,
                 'New Testament Manuscript Collection from the University of Chicago.',
                 'University of Chicago Library'

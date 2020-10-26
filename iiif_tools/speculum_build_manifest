@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 """Usage:
-   speculum_build_manifest <identifier>
+   speculum_build_manifest <ark>
 """
 
 from classes import IIIFManifest
-from classes import get_ark_from_original_identifier
+from classes import get_ark_from_original_identifier, get_original_identifier_from_ark
 from docopt import docopt
 import json
 import requests
@@ -48,6 +48,10 @@ class SpeculumIIIFManifest(IIIFManifest):
             'value': { 'en': [ self.required_statement ] }
         })
         metadata.append({
+            'label': { 'en': [ 'ARK Identifier' ] },
+            'value': { 'en': [ self.ark ] }
+        })
+        metadata.append({
             'label': { 'en': [ 'License' ] },
             'value': { 'en': [ '<a href="https://creativecommons.org/licenses/by-nc/4.0/">https://creativecommons.org/licenses/by-nc/4.0/</a>' ] }
         })
@@ -57,11 +61,13 @@ class SpeculumIIIFManifest(IIIFManifest):
 if __name__ == '__main__':
     arguments = docopt(__doc__)
 
+    identifier = get_original_identifier_from_ark(arguments['<ark>'])
+
     with open('metadata/speculum.json') as f:
         metadata = json.load(f)
 
     title = None
-    for m in metadata[arguments['<identifier>']]:
+    for m in metadata[identifier]:
         if m['label'] == 'Title':
             title = m['value']
     assert title is not None
@@ -69,8 +75,8 @@ if __name__ == '__main__':
     print(
         json.dumps(
             SpeculumIIIFManifest(
-                arguments['<identifier>'],
-                get_ark_from_original_identifier(arguments['<identifier>']),
+                identifier,
+                arguments['<ark>'],
                 title,
                 'Speculum Romanae Magnificentiae from the University of Chicago.',
                 'University of Chicago Library'

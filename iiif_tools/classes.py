@@ -18,6 +18,12 @@ def get_ark_from_original_identifier(identifier):
     c.execute("SELECT ark FROM arks WHERE original_identifier = '%s'" % identifier)
     return c.fetchone()[0]
 
+def get_original_identifier_from_ark(ark):
+    conn = sqlite3.connect('/data/s4/jej/ark_data.db')
+    c = conn.cursor()
+    c.execute("SELECT original_identifier FROM arks WHERE ark = '%s'" % ark)
+    return c.fetchone()[0]
+
 def get_digital_objects_from_ark(ark):
     '''Returns a list of page objects, 
         e.g. ['00000001', '00000002', '00000003']'''

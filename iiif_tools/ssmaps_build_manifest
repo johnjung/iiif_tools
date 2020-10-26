@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """Usage:
-   ssmaps_build_manfest <identifier>
+   ssmaps_build_manfest <ark>
 
 Produce a V3 IIIF manifest file for the Social Scientists Maps Collection.
 """
@@ -9,7 +9,7 @@ Produce a V3 IIIF manifest file for the Social Scientists Maps Collection.
 import json
 import requests
 import xml.etree.ElementTree as ElementTree
-from classes import get_ark_from_original_identifier
+from classes import get_ark_from_original_identifier, get_original_identifier_from_ark
 from classes import IIIFManifest
 from docopt import docopt
 from io import BytesIO
@@ -51,7 +51,7 @@ class SSMapsIIIFManifest(IIIFManifest):
         # get DC metadata.
         with BytesIO(
             requests.get('http://ark.lib.uchicago.edu/{}/file.dc.xml'.format(
-                ark,
+                self.ark,
             )).content
         ) as f:
             dc = ElementTree.fromstring(f.read())
@@ -78,6 +78,10 @@ class SSMapsIIIFManifest(IIIFManifest):
             'value': { 'en': [ self.required_statement ] }
         })
         metadata.append({
+            'label': { 'en': [ 'ARK Identifier' ] },
+            'value': { 'en': [ self.ark ] }
+        })
+        metadata.append({
             'label': { 'en': [ 'License' ] },
             'value': { 'en': [ '<a href="https://creativecommons.org/licenses/by-nc/4.0/">https://creativecommons.org/licenses/by-nc/4.0/</a>' ] }
         })
@@ -88,12 +92,12 @@ class SSMapsIIIFManifest(IIIFManifest):
 if __name__ == '__main__':
     arguments = docopt(__doc__)
 
-    ark = get_ark_from_original_identifier(arguments['<identifier>'])
+    identifier = get_original_identifier_from_ark(arguments['<ark>'])
 
     # get DC metadata.
     with BytesIO(
         requests.get('http://ark.lib.uchicago.edu/{}/file.dc.xml'.format(
-            ark,
+            arguments['<ark>']
         )).content
     ) as f:
         dc = ElementTree.fromstring(f.read())
@@ -102,8 +106,8 @@ if __name__ == '__main__':
     print(
         json.dumps(
             SSMapsIIIFManifest(
-                arguments['<identifier>'],
-                ark,
+                identifier,
+                arguments['<ark>'],
                 title,
                 'Social Scientists Maps from the University of Chicago.',
                 'University of Chicago Library'

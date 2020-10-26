@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """Usage:
-   soc_sci_maps_build_collection (--list-by-publication-date | --subject-overview | --subject=<subject>)
+   ssmaps_build_collection (--list-by-publication-date | --subject-overview | --subject=<subject>)
 
 This command gets MARCXML from the social scientist maps IIIF_Files
 directories and builds an IIIF Collection json document.
@@ -178,8 +178,7 @@ def socsci_identifiers():
         'G4104-C6P3-1940-M3',
         'G4104-C6P3-1940z-P7',
         'G4104-C6P3-1943-M2',
-        'G4104-C6P3-1943-M21',
-        'G4104-C6-2H9E11-1956-T3',
+        'G4104-C6P3-1943-M21', 'G4104-C6-2H9E11-1956-T3',
     )
 
 def get_dc_for_identifier(i):
@@ -200,9 +199,11 @@ def list_by_publication_date():
     )
 
     for i in socsci_identifiers():
+        ark = get_ark_for_socsci_identifier(i)
+        noid = ark.split('/')[1]
         dc = get_dc_for_identifier(i)
-
         size = get_size_for_socsci_identifier(i)
+
         if size[0] > size[1]:
             thumbnail_size = (500, int(500.0 / size[0] * size[1]))
         else:
@@ -210,30 +211,13 @@ def list_by_publication_date():
 
         collection['items'].append({
             'type': 'Manifest',
-            'id': 'https://iiif-manifest.lib.uchicago.edu/maps/chisoc/{0}/{0}.json'.format(i),
+            'id': 'https://iiif-manifest-dev.lib.uchicago.edu/{}.json'.format(noid),
             'behavior': [ 'multi-part' ],
-            'label': { 
-                'en': [ 
-                    dc.find('{http://purl.org/dc/elements/1.1/}title').text 
-                ] 
-            },
-            'metadata': [
-                {
-                    'label': { 
-                        'en': [ 
-                            'Date' 
-                        ] 
-                    },
-                    'value': { 
-                        'en': [ 
-                            dc.find('{http://purl.org/dc/terms/}issued').text
-                        ] 
-                    },
-                }
-            ],
+            'label': { 'en': [ dc.find('{http://purl.org/dc/elements/1.1/}title').text ] },
+            'metadata': metadata(dc),
             'thumbnail': [
                 {
-                    'id': 'https://iiif-server-dev.lib.uchicago.edu/{}/full/{},{}/0/default.jpg'.format(
+                    'id': 'https://iiif-server.lib.uchicago.edu/{}/full/{},{}/0/default.jpg'.format(
                         urllib.parse.quote(get_ark_for_socsci_identifier(i), safe=''),
                         thumbnail_size[0],
                         thumbnail_size[1]
@@ -278,6 +262,8 @@ def subject(s):
     )
 
     for i in socsci_identifiers():
+        ark = get_ark_for_socsci_identifier(i)
+        noid = ark.split('/')[1]
         dc = get_dc_for_identifier(i)
         subject_slugs = [s.text.lower().replace(' ', '-') for s in dc.findall('{http://purl.org/dc/elements/1.1/}subject')]
 
@@ -290,12 +276,13 @@ def subject(s):
         if subject_slug in subject_slugs:
             collection['items'].append({
                 'type': 'Manifest',
-                'id': 'https://iiif-manifest.lib.uchicago.edu/maps/chisoc/{0}/{0}.json'.format(i),
+                'id': 'https://iiif-manifest-dev.lib.uchicago.edu/{}.json'.format(noid),
                 'behavior': [ 'multi-part' ],
                 'label': { 'en': [ dc.find('{http://purl.org/dc/elements/1.1/}title').text ] },
+                'metadata': metadata(dc),
                 'thumbnail': [
                     {
-                        'id': 'https://iiif-server-dev.lib.uchicago.edu/{}/full/{},{}/0/default.jpg'.format(
+                        'id': 'https://iiif-server.lib.uchicago.edu/{}/full/{},{}/0/default.jpg'.format(
                             urllib.parse.quote(get_ark_for_socsci_identifier(i), safe=''),
                             thumbnail_size[0],
                             thumbnail_size[1]
@@ -309,6 +296,50 @@ def subject(s):
             })
 
     return json.dumps(collection)
+
+def metadata(dc):
+    output = []
+    for label, xpaths in (
+        (
+            'Title',
+            [
+                '{http://purl.org/dc/elements/1.1/}title'
+            ]
+        ),
+        (
+            'Creator',
+            [
+                '{http://www.loc.gov/mads/rdf/v1#}ConferenceName',
+                '{http://www.loc.gov/mads/rdf/v1#}CorporateName',
+                '{http://www.loc.gov/mads/rdf/v1#}PersonalName'
+            ]
+        ),
+        (
+            'Date',
+            [
+                '{http://purl.org/dc/terms/}issued'
+            ]
+        ),
+        (
+            'Publisher',
+            [
+                '{http://purl.org/dc/elements/1.1/}publisher'
+            ]
+        ),
+        (
+            'Language',
+            [
+                '{http://purl.org/dc/elements/1.1/}language'
+            ]
+        )
+    ):
+        for x in xpaths:
+            for e in dc.findall(x):
+                output.append({
+                    'label': { 'en': [ label ] },
+                    'value': { 'en': [ e.text ] },
+                })
+    return output
 
 def main():
     options = docopt(__doc__)

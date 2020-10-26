@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """Usage:
-   rac_build_manifest <identifier>
+   rac_build_manifest <ark>
 """
 
 from docopt import docopt
@@ -13,7 +13,7 @@ from PIL import Image
 Image.MAX_IMAGE_PIXELS = 2000000000
 
 from classes import IIIFManifest
-from classes import get_digital_objects_from_ark
+from classes import get_digital_objects_from_ark, get_original_identifier_from_ark
 
 
 class RacIIIFManifest(IIIFManifest):
@@ -52,6 +52,10 @@ class RacIIIFManifest(IIIFManifest):
                 'value': { 'en': [ self.required_statement ] }
             },
             {
+                'label': { 'en': [ 'ARK Identifier' ] },
+                'value': { 'en': [ self.ark ] }
+            },
+            {
                 'label': { 'en': [ 'Lincense' ] },
                 'value': { 'en': [ '<a href="http://campub.lib.uchicago.edu/rights/">http://campub.lib.uchicago.edu/rights/</a>' ] }
             }
@@ -59,6 +63,8 @@ class RacIIIFManifest(IIIFManifest):
 
 if __name__ == '__main__':
     arguments = docopt(__doc__)
+
+    identifier = get_original_identifier_from_ark(arguments['<ark>'])
 
     arks = {
         'rac-0392': 'ark:61001/b2hd4d25q389',
@@ -78,11 +84,11 @@ if __name__ == '__main__':
     print(
         json.dumps(
             RacIIIFManifest(
-                arguments['<identifier>'],
-                arks[arguments['<identifier>']],
-                titles[arguments['<identifier>']],
+                identifier,
+                arks[identifier],
+                titles[identifier],
                 'Manuscript Collection from the University of Chicago.',
-                attributions[arguments['<identifier>']]
+                attributions[identifier]
             ).data(),
             indent=4,
             sort_keys=True
