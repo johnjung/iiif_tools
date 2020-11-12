@@ -43,7 +43,8 @@ def get_digital_objects_from_ark(ark):
     return sorted(objects)
 
 class IIIFManifest:
-    def __init__(self, identifier, ark, title, summary, required_statement):
+    def __init__(self, domain, identifier, ark, title, summary, required_statement):
+        self.domain = domain
         self.identifier = identifier
         self.ark = ark
         self.title = title
@@ -58,13 +59,6 @@ class IIIFManifest:
             img = Image.open(f)
         self.logo_size = img.size
         self.logo_mime_type = 'image/png'
-
-    def _get_manifest_url(self):
-       return 'https://iiif-manifest.lib.uchicago.edu/{}/{}/{}.json'.format(
-           self.identifier.split('-')[0],
-           self.identifier.split('-')[1],
-           self.identifier
-       )
 
     def _get_provider(self):
         return [

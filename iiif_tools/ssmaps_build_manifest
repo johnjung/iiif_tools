@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """Usage:
-   ssmaps_build_manfest <ark>
+   ssmaps_build_manfest <ark> <domain>
 
 Produce a V3 IIIF manifest file for the Social Scientists Maps Collection.
 """
@@ -32,11 +32,18 @@ class SSMapsIIIFManifest(IIIFManifest):
         ) as f:
             self.image_sizes.append(Image.open(f).size)
 
+    def _get_manifest_url(self):
+        return '{}/social-scientists-map-chicago/object/{}.json'.format(
+            self.domain,
+            self.ark.split('/')[-1]
+        )
+
     def _get_metadata(self):
         metadata = [
             {
                 'label': { 'en': [ 'Identifier' ] },
-                'value': { 'en': [ 'https://iiif-manifest.lib.uchicago.edu/maps/chisoc/{0}/{0}.json'.format(self.identifier) ] },
+                'value': { 'en': [
+                '{0}/social-scientists-map-chicago/object/{1}.json'.format(self.domain, self.ark.split('/')[1]) ] },
             },
             {
                 'label': { 'en': [ 'Title' ] },
@@ -106,6 +113,7 @@ if __name__ == '__main__':
     print(
         json.dumps(
             SSMapsIIIFManifest(
+                arguments['<domain>'],
                 identifier,
                 arguments['<ark>'],
                 title,
